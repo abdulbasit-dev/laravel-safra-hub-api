@@ -8,43 +8,31 @@ use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
 {
-  /**
-   * Run the database seeds.
-   *
-   * @return void
-   */
-  public function run()
-  {
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $faker = Factory::create();
+        for ($i = 0; $i < 50; $i++) {
+            $user = User::firstOrcreate([
+                'name' => $faker->firstName() . " " . $faker->firstName(),
+                'email' => $faker->email(),
+                'password' => bcrypt('password'),
+                'gender' => rand(1, 3),
+                'image' => null,
+                'birthday' => $faker->date('Y/m/d')
+            ]);
 
-    User::create([
-      'name' => 'basit',
-      'email' => 'basit@test.com',
-      'password' => bcrypt('password'),
-    ]);
-    User::create([
-      'name' => 'hama',
-      'email' => 'hama@test.com',
-      'password' => bcrypt('password'),
-    ]);
-    User::create([
-      'name' => '7hama',
-      'email' => '7hama@test.com',
-      'password' => bcrypt('password'),
-    ]);
-    User::create([
-      'name' => 'basit',
-      'email' => 'bassdsi2t@test.com',
-      'password' => bcrypt('password'),
-    ]);
-    User::create([
-      'name' => 'hama',
-      'email' => 'hamsdda@test.com',
-      'password' => bcrypt('password'),
-    ]);
-    User::create([
-      'name' => '7hama',
-      'email' => '7heasdma@test.com',
-      'password' => bcrypt('password'),
-    ]);
-  }
+
+            if ($i < 15) {
+                continue;
+            }
+
+            $users_id = User::inRandomOrder()->take(rand(1, 15))->pluck('id')->toArray();
+            $user->friends()->attach($users_id);
+        }
+    }
 }
