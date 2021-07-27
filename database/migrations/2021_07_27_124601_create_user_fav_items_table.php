@@ -18,7 +18,7 @@ class CreateUserFavItemsTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete("cascade")->onUpdate('cascade');
             $table->foreignId('category_id')->constrained('categories')->onDelete("cascade")->onUpdate('cascade');
             $table->string('name');
-            $table->float('price');
+            $table->float('price')->nullable();
             $table->timestamps();
         });
     }

@@ -3,84 +3,112 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserFavItemReuest;
+use App\Models\Category;
+use App\Models\User;
 use App\Models\UserFavItem;
 use Illuminate\Http\Request;
 
 class UserFavItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $total_item = 0;
+
     public function index()
     {
-        //
+        //get user id
+        $id = auth()->id();
+
+        $item_categories = Category::select('id', 'name', 'image')->with([
+            'items' => function ($q) use ($id) {
+                $items =  $q->select('id as item_id', 'user_id', 'category_id', 'name', 'price')->where('user_id', $id)->get();
+                $this->total_item = count($items);
+                return $items;
+            }
+        ])->whereHas(
+            'items',
+            function ($q) use ($id) {
+                return $q->where('user_id', $id);
+            }
+        )->get();
+
+        foreach ($item_categories as $item_categorie) {
+            $item_categorie['total_item_per_category'] =  count($item_categorie['items']);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'total' => $this->total_item,
+            'message' => 'all items acording to category',
+            'data' => $item_categories
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(StoreUserFavItemReuest $request)
     {
-        //
+        $user_id = auth()->id();
+
+        $favItem = UserFavItem::create([
+            'user_id' => $user_id,
+            'category_id' => $request->category_id,
+            'name' => $request->name,
+            'price' => $request->price,
+        ]);
+
+        return response()->json([
+            "status" => 201,
+            "message" => 'item added user favorate list',
+            'data' => $favItem
+        ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show($item_id)
     {
-        //
+        //get user id
+        $id = auth()->id();
+
+        $item_categories = Category::select('id', 'name', 'image')->where('id', $item_id)->with([
+            'items' => function ($q) use ($id) {
+                $items =  $q->select('id as item_id', 'user_id', 'category_id', 'name', 'price')->where('user_id', $id)->get();
+                $this->total_item = count($items);
+                return $items;
+            }
+        ])->whereHas(
+            'items',
+            function ($q) use ($id) {
+                return $q->where('user_id', $id);
+            }
+        )->get();
+
+        foreach ($item_categories as $item_categorie) {
+            $item_categorie['total_item_per_category'] =  count($item_categorie['items']);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'total' => $this->total_item,
+            'message' => 'all items acording to category',
+            'data' => $item_categories
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\UserFavItem  $userFavItem
-     * @return \Illuminate\Http\Response
-     */
-    public function show(UserFavItem $userFavItem)
+    public function destroy(UserFavItem $user_favorate_item)
     {
-        //
-    }
+        //get user id
+        $user_id =  auth()->id();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\UserFavItem  $userFavItem
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(UserFavItem $userFavItem)
-    {
-        //
-    }
+        //check if item belongs to the user
+        if ($user_id !== $user_favorate_item->user_id) {
+            return response()->json([
+                "status" => 403,
+                "message" => "this item dosen't belongs to you",
+            ], 403);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserFavItem  $userFavItem
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, UserFavItem $userFavItem)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\UserFavItem  $userFavItem
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(UserFavItem $userFavItem)
-    {
-        //
+        $user_favorate_item->delete();
+        return response()->json([
+            "status" => 202,
+            "message" => "item removed from user favorate list",
+        ], 202);
     }
 }
