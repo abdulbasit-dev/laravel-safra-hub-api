@@ -10,10 +10,8 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-
     public function register(StoreUserRequest $request)
     {
-
         //Store image
         $file_name = '';
         if ($request->hasFile('image')) {
@@ -25,7 +23,6 @@ class AuthController extends Controller
             $file_name = 'no_image.png';
         }
 
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -36,9 +33,7 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken('myapitoken')->plainTextToken;
-
         $user["user_token"] = $token;
-
 
         return response()->json([
             "status" => 201,
@@ -65,24 +60,24 @@ class AuthController extends Controller
             ];
         }
 
-        //login user
-        Auth::attempt($credentials);
-
         //create token
         $token = $user->createToken('myapitoken')->plainTextToken;
+        $user["user_token"] = $token;
 
-        return [
-            "user" => $user,
-            "token" => $token
-        ];
+        return response()->json([
+            "status" => 200,
+            "message" => 'user logged in succefully',
+            'data' => $user
+        ], 200);
     }
 
 
     public function logout()
     {
         auth()->user()->tokens()->delete();
-        return [
-            'message' => "logout"
-        ];
+        return response()->json([
+            "status" => 200,
+            "message" => 'user log out succefully',
+        ], 200);
     }
 }
