@@ -13,18 +13,38 @@ class AuthController extends Controller
 
     public function register(StoreUserRequest $request)
     {
+
+        //Store image
+        $file_name = '';
+        if ($request->hasFile('image')) {
+            $getFileNameWithExt = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($getFileNameWithExt, PATHINFO_FILENAME);
+            $file_name = $fileName . '_' . time() . '.' . $request->image->extension();
+            $request->image->move(public_path('uploads/profile'), $file_name);
+        } else {
+            $file_name = 'no_image.png';
+        }
+
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'gender' => $request->gender,
+            'birthday' => $request->birthday,
+            'image' => '/uploads/profile/' . $file_name,
         ]);
 
         $token = $user->createToken('myapitoken')->plainTextToken;
 
-        return [
-            "user" => $user,
-            "token" => $token
-        ];
+        $user["user_token"] = $token;
+
+
+        return response()->json([
+            "status" => 201,
+            "message" => 'user created succefully',
+            'data' => $user
+        ], 201);
     }
 
 
