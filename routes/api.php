@@ -1,7 +1,6 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,14 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('users', function () {
-  $users = User::all();
-  return [
-    'total' => count($users),
-    'data' => $users,
-  ];
-});
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-  return $request->user();
+Route::group(['namespace' => 'Api'], function () {
+    Route::resource('picnics', PicnicController::class);
 });
