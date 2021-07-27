@@ -6,7 +6,7 @@ use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
-class UserTableSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.

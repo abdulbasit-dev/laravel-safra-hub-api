@@ -18,19 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::get('test', function () {
-    return 'test';
-});
-
-
-Route::get('users', function () {
-    return User::all();
-});
-
-
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout', [AuthController::class, 'logout']);
 });
+
 Route::group(['namespace' => 'Api'], function () {
     Route::resource('picnics', PicnicController::class);
+    Route::resource('categories', CategoryController::class);
 });
