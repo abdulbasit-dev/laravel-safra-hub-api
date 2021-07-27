@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'user_friends', 'user_id', 'friend_id');
     }
+
+    public function items()
+    {
+        return $this->hasMany(UserFavItem::class);
+    }
 }

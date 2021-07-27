@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('image')->nullable();
+            $table->text('bio')->nullable();
             $table->tinyInteger('gender')->comment('1=>male 2=>female 3=>other');
             $table->dateTime('birthday')->nullable();
             $table->boolean('is_available')->default(true)->comment('whether currntry in picnic or not');
