@@ -21,7 +21,7 @@ class UserFavItemController extends Controller
 
         $item_categories = Category::select('id', 'name', 'image')->with([
             'items' => function ($q) use ($id) {
-                $items =  $q->select('id as item_id', 'user_id', 'category_id', 'name', 'price')->where('user_id', $id)->get();
+                $items =  $q->select('id as item_id', 'user_id', 'category_id', 'name')->where('user_id', $id)->orderBy('created_at','desc')->get();
                 $this->total_item = count($items);
                 return $items;
             }
@@ -52,7 +52,6 @@ class UserFavItemController extends Controller
             'user_id' => $user_id,
             'category_id' => $request->category_id,
             'name' => $request->name,
-            'price' => $request->price,
         ]);
 
         return response()->json([
@@ -69,7 +68,7 @@ class UserFavItemController extends Controller
 
         $item_categories = Category::select('id', 'name', 'image')->where('id', $item_id)->with([
             'items' => function ($q) use ($id) {
-                $items =  $q->select('id as item_id', 'user_id', 'category_id', 'name', 'price')->where('user_id', $id)->get();
+                $items =  $q->select('id as item_id', 'user_id', 'category_id', 'name')->where('user_id', $id)->orderBy('created_at','desc')->get();
                 $this->total_item = count($items);
                 return $items;
             }
