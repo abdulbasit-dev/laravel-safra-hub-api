@@ -52,6 +52,15 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
+
+        // //delete image from public folder
+        // if ($menu->image !== "/uploads/menu/no_image.png") {
+        //     $imageArr = explode('/', $menu->image);
+        //     $image = end($imageArr);
+        //     $destinationPath = 'uploads/menu';
+        //     File::delete($destinationPath . "/$image");
+        // }
+
         return response()->json([
             "status" => 202,
             "message" => "category deleted successfuly",
