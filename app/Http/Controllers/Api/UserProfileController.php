@@ -70,7 +70,7 @@ class UserProfileController extends Controller
             'status' => 202,
             'message' => 'user information updated',
             'data' => $user
-        ]);
+        ],202);
     }
 
     public function updateImage(Request $request)

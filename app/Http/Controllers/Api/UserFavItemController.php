@@ -88,7 +88,7 @@ class UserFavItemController extends Controller
             'total' => $this->total_item,
             'message' => 'all items acording to category',
             'data' => $item_categories
-        ]);
+        ],200);
     }
 
     public function destroy(UserFavItem $user_favorate_item)
