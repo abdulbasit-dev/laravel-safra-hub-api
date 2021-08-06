@@ -32,6 +32,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 //PUBLIC ROUTES
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('test', function () {
+    //generate uniq code
+    // return str::upper(Str::random(6));
+    return 'test';
+});
 
 Route::group(['namespace' => 'Api'], function () {
     Route::resource('picnics', PicnicController::class)->except('create', 'edit');

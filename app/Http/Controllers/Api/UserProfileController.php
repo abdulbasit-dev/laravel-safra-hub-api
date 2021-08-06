@@ -44,10 +44,9 @@ class UserProfileController extends Controller
             $user->birthday = $request->birthday;
         }
 
-
         $file_name = '';
         if ($request->hasFile('image')) {
-
+            
             //delete old image
             if ($user->image !== "/uploads/profile/no_image.png") {
                 $imageArr = explode('/', $user->image);
