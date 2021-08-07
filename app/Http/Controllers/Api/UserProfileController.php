@@ -46,7 +46,7 @@ class UserProfileController extends Controller
 
         $file_name = '';
         if ($request->hasFile('image')) {
-            
+
             //delete old image
             if ($user->image !== "/uploads/profile/no_image.png") {
                 $imageArr = explode('/', $user->image);
@@ -69,7 +69,7 @@ class UserProfileController extends Controller
             'status' => 202,
             'message' => 'user information updated',
             'data' => $user
-        ],202);
+        ], 202);
     }
 
     public function updateImage(Request $request)
