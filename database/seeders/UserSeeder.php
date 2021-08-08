@@ -23,9 +23,9 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('password'),
                 'gender' => rand(1, 3),
                 'image' => null,
+                'qrcode' => '/uploads/qrcodes/user/abdulbasit-ssds.png',
                 'birthday' => $faker->date('Y/m/d')
             ]);
-
 
             if ($i < 15) {
                 continue;

@@ -8,7 +8,7 @@ use Faker\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+// use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -29,19 +29,19 @@ class AuthController extends Controller
                 $file_name = 'no_image.png';
             }
 
-            //generate qrcode 
-            $name_slug = Str::slug($request->name);
-            $qr = QrCode::format('png');
-            $qr->margin(1);
-            $qr->size(300);
-            $qr->errorCorrection('H');
+            // //generate qrcode 
+            // $name_slug = Str::slug($request->name);
+            // $qr = QrCode::format('png');
+            // $qr->margin(1);
+            // $qr->size(300);
+            // $qr->errorCorrection('H');
 
-            //only merge image with qrcode if user send its image
-            if ($file_name !== 'no_image.png') {
-                $qr->merge('../public/uploads/profile/' . $file_name, .3);
-            }
+            // //only merge image with qrcode if user send its image
+            // if ($file_name !== 'no_image.png') {
+            //     $qr->merge('../public/uploads/profile/' . $file_name, .3);
+            // }
 
-            $qr->generate('http://www.simplesoftware.io', '../public/uploads/qrcodes/user/' . $name_slug . '.png');
+            // $qr->generate('http://www.simplesoftware.io', '../public/uploads/qrcodes/user/' . $name_slug . '.png');
 
             $user = User::create([
                 'name' => $request->name,
@@ -50,7 +50,8 @@ class AuthController extends Controller
                 'gender' => $request->gender,
                 'birthday' => $request->birthday,
                 'image' => '/uploads/profile/' . $file_name,
-                'qrcode' => '/uploads/qrcodes/user/' . $name_slug . '.png',
+                // 'qrcode' => '/uploads/qrcodes/user/' . $name_slug . '.png',
+                'qrcode' => '/uploads/qrcodes/user/abdulbasit-ssds.png',
             ]);
 
             $token = $user->createToken('myapitoken')->plainTextToken;
@@ -84,9 +85,10 @@ class AuthController extends Controller
 
         //check passwors
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            return [
-                'message' => "wronge credential"
-            ];
+            return response()->json([
+                "status" => 401,
+                "message" => 'wronge credential',
+            ], 401);
         }
 
         //create token

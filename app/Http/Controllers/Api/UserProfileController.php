@@ -19,6 +19,15 @@ class UserProfileController extends Controller
         ], 200);
     }
 
+    public function userProfileById(User $user)
+    {
+        return response()->json([
+            'status' => 200,
+            'message' => "user information",
+            'data' => $user
+        ], 200);
+    }
+
     public function update(Request $request)
     {
         //get user
@@ -72,26 +81,17 @@ class UserProfileController extends Controller
         ], 202);
     }
 
-    public function updateImage(Request $request)
+    public function userFriends()
     {
-        //get User
+        //get user
         $user = auth()->user();
+        $user_friends  = $user->friends()->select(['id', 'name', 'email', 'image'])->get();
 
-        //check request if has image
-        if ($request->hasFile('image')) {
-
-            //get old image path and delete it 
-
-            //store new image
-            //Store image
-            $file_name = '';
-
-            $getFileNameWithExt = $request->file('image')->getClientOriginalName();
-            $fileName = pathinfo($getFileNameWithExt, PATHINFO_FILENAME);
-            $file_name = $fileName . '_' . time() . '.' . $request->image->extension();
-            $request->image->move(public_path('uploads/categroy'), $file_name);
-        } else {
-            $file_name = 'no_image.png';
-        }
+        return response()->json([
+            'status' => 202,
+            'message' => 'user friends',
+            'total' => count($user_friends),
+            'data' => $user_friends
+        ], 202);
     }
 }
