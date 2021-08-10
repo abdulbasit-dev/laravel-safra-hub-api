@@ -29,7 +29,7 @@ class AuthController extends Controller
                 $file_name = 'no_image.png';
             }
 
-            // //generate qrcode 
+            // //generate qrcode
             // $name_slug = Str::slug($request->name);
             // $qr = QrCode::format('png');
             // $qr->margin(1);
@@ -53,6 +53,8 @@ class AuthController extends Controller
                 // 'qrcode' => '/uploads/qrcodes/user/' . $name_slug . '.png',
                 'qrcode' => '/uploads/qrcodes/user/abdulbasit-ssds.png',
             ]);
+
+
 
             $token = $user->createToken('myapitoken')->plainTextToken;
             $user["user_token"] = $token;

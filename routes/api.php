@@ -1,8 +1,11 @@
 <?php
 
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PicnicController;
 use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmailVerificationController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -18,12 +21,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
 //PROTECTED ROUTES
-Route::group(['middleware' => 'auth:sanctum'], function () {
+Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
+    Route::post('email/check-verification', [EmailVerificationController::class, 'checkVerification']);
     Route::group(['namespace' => 'Api'], function () {
-        Route::resource('user-favorate-items', UserFavItemController::class)->except('create', 'edit', 'update');
+        Route::resource('user-favorate-items', \App\Http\Controllers\Api\UserFavItemController::class)->except('create', 'edit', 'update');
         Route::get('/user-profiles', [UserProfileController::class, 'index']);
         Route::get('/user-profiles/{user}', [UserProfileController::class, 'userProfileById']);
         Route::put('/user-profiles', [UserProfileController::class, 'update']);
@@ -31,11 +35,13 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 });
 
+
 //PUBLIC ROUTES
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/all-user', function(){
-    return User::orderBy('created_at','desc')->get();
+Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
+Route::get('/all-user', function () {
+    return User::orderByDesc('id')->get();
 });
 Route::get('test', function () {
     //generate uniq code
