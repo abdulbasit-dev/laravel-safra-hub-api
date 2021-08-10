@@ -57,13 +57,14 @@ class AuthController extends Controller
 
 
             $token = $user->createToken('myapitoken')->plainTextToken;
-            $user["user_token"] = $token;
+
+            $user->sendEmailVerificationNotification();
 
             DB::commit();
             return response()->json([
                 "status" => 201,
-                "message" => 'user created succefully',
-                'data' => $user
+                "message" => 'verification link sent',
+                'user_token' =>  $token
             ], 201);
         } catch (Exception $e) {
             DB::rollBack();

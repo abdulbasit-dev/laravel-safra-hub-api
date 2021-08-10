@@ -26,7 +26,7 @@ class EmailVerificationController extends Controller
 
         return response()->json([
             'status'=>200,
-            'message' => 'verification-link-sen'
+            'message' => 'verification link sent'
         ],200);
     }
 
