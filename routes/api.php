@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::group(['middleware' => 'localization'], function () {
+
     //PROTECTED ROUTES
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/logout', [AuthController::class, 'logout']);
@@ -56,4 +56,3 @@ Route::group(['middleware' => 'localization'], function () {
         Route::resource('categories', CategoryController::class)->except('create', 'edit');
     });
 
-});
