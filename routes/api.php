@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
     Route::post('email/check-verification', [EmailVerificationController::class, 'checkVerification']);
 
-    Route::resource('user-favorate-items', UserFavItemController::class)->except('create', 'edit', 'update');
+    Route::resource('user-favorite-items', UserFavItemController::class)->except('create', 'edit', 'update');
     //User Profile
     Route::get('/user-profiles', [UserProfileController::class, 'index']);
     Route::get('/user-profiles/{user}', [UserProfileController::class, 'userProfileById']);
