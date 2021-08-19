@@ -5,16 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserFavItemReuest;
 use App\Models\Category;
-use App\Models\User;
 use App\Models\UserFavItem;
-use Illuminate\Http\Request;
+use \Illuminate\Http\JsonResponse as Json;
 
 class UserFavItemController extends Controller
 {
 
     private $total_item = 0;
 
-    public function index()
+    public function index() : Json
     {
         //get user id
         $id = auth()->id();
@@ -32,8 +31,8 @@ class UserFavItemController extends Controller
             }
         )->get();
 
-        foreach ($item_categories as $item_categorie) {
-            $item_categorie['total_item_per_category'] =  count($item_categorie['items']);
+        foreach ($item_categories as $item_category) {
+            $item_category['total_item_per_category'] =  count($item_category['items']);
         }
 
         return response()->json([
@@ -44,7 +43,7 @@ class UserFavItemController extends Controller
         ]);
     }
 
-    public function store(StoreUserFavItemReuest $request)
+    public function store(StoreUserFavItemReuest $request) : Json
     {
         $user_id = auth()->id();
 
@@ -61,7 +60,7 @@ class UserFavItemController extends Controller
         ], 201);
     }
 
-    public function show($item_id)
+    public function show($item_id): Json
     {
         //get user id
         $id = auth()->id();
@@ -91,20 +90,20 @@ class UserFavItemController extends Controller
         ],200);
     }
 
-    public function destroy(UserFavItem $user_favorate_item)
+    public function destroy(UserFavItem $user_favorite_item): Json
     {
         //get user id
         $user_id =  auth()->id();
 
         //check if item belongs to the user
-        if ($user_id !== $user_favorate_item->user_id) {
+        if ($user_id !== $user_favorite_item->user_id) {
             return response()->json([
                 "status" => 403,
                 "message" => "this item dosen't belongs to you",
             ], 403);
         }
 
-        $user_favorate_item->delete();
+        $user_favorite_item->delete();
         return response()->json([
             "status" => 202,
             "message" => "item removed from user favorate list",
