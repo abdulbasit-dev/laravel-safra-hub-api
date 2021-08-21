@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
-use Faker\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 // use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -115,4 +115,47 @@ class AuthController extends Controller
             "message" => 'user logout succefully',
         ], 200);
     }
+
+    public static function resetPassword(Request $request)
+    {
+        $messages = [
+            'old_password.required' => __('api.old_password_req'),
+            'new_password.required' => __('api.new_password_req'),
+            'old_password.min'=>       __('api.old_password_min'),
+            'new_password.min'=>       __('api.new_password_min'),
+        ];
+        //validation
+        $validator = Validator::make($request->all(),[
+            'old_password'=>['required','string','min:8'],
+            'new_password'=>['required','string','min:8'],
+        ],$messages);
+
+        if ($validator->fails()){
+            return response()->json([
+                'status' => 422,
+                'message' => $validator->errors()->all()
+            ],422);
+        }
+
+        //get user
+        $user = auth()->user();
+        //check password
+        if(!Hash::check($request->old_password,$user->password)){
+            return response()->json([
+                'status' => 403,
+                'message' => __('api.invalid_password')
+            ],403);
+        }
+
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => __('api.api.password_reset_success')
+        ],200);
+
+    }
 }
+
+

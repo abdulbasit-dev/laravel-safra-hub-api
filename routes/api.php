@@ -31,6 +31,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Email Verify
     Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
     Route::post('email/check-verification', [EmailVerificationController::class, 'checkVerification']);
+    //reset password
+    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+
 
 
     Route::Post('validate-code',[ForgetPasswordController::class,'validateCode']);
@@ -50,6 +53,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 Route::resource('picnics', PicnicController::class)->except('create', 'edit');
 Route::resource('categories', CategoryController::class)->except('create', 'edit');
+
 //Forget Password
 Route::Post('forget-password',[ForgetPasswordController::class,'forgetPassword']);
 Route::Post('validate-code',[ForgetPasswordController::class,'validateCode']);
