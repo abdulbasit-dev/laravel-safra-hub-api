@@ -25,6 +25,8 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('gender')->nullable()->comment('1=>male 2=>female 3=>other');
             $table->dateTime('birthday')->nullable();
             $table->boolean('is_available')->default(true)->comment('whether currently in picnic or not');
+            $table->string("otp")->nullable();
+            $table->boolean("otp_verified")->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -12,5 +12,12 @@
 */
 
 return [
-   
+    'wrong_credential' =>               'Email or Password are incorrect',
+    'send_forget_password_code' =>      'A Verification Code Send to Your email',
+    'internal_server_error' =>          'Internal Server Error',
+    'user_not_found_email' =>           'No User Found with this email',
+    'code_invalid' =>                   'Verification code invalid',
+    'code_correct' =>                   'Verification code correct',
+    'new_password'=>                    'Password Updated Successfully',
+    'code_not_verified'=>               'Code is not verified',
 ];

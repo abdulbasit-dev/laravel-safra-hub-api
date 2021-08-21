@@ -91,7 +91,7 @@ class AuthController extends Controller
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return response()->json([
                 "status" => 401,
-                "message" => 'wronge credential',
+                "message" => __('api.wrong_credential'),
             ], 401);
         }
 

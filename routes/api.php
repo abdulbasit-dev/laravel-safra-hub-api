@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
+use App\Http\Controllers\Api\Auth\ForgetPasswordController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\PicnicController;
 use App\Http\Controllers\Api\UserProfileController;
@@ -31,6 +32,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
     Route::post('email/check-verification', [EmailVerificationController::class, 'checkVerification']);
 
+
+    Route::Post('validate-code',[ForgetPasswordController::class,'validateCode']);
+    Route::Post('new-password',[ForgetPasswordController::class,'forgetPassword']);
+
     Route::resource('user-favorite-items', UserFavItemController::class)->except('create', 'edit', 'update');
     //User Profile
     Route::get('/user-profiles', [UserProfileController::class, 'index']);
@@ -45,6 +50,11 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 Route::resource('picnics', PicnicController::class)->except('create', 'edit');
 Route::resource('categories', CategoryController::class)->except('create', 'edit');
+//Forget Password
+Route::Post('forget-password',[ForgetPasswordController::class,'forgetPassword']);
+Route::Post('validate-code',[ForgetPasswordController::class,'validateCode']);
+Route::Post('new-password',[ForgetPasswordController::class,'newPassword']);
+
 
 //TEST ROUTES
 Route::get('/all-user', function () {
