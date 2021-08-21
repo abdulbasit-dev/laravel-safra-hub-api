@@ -12,6 +12,17 @@
 */
 
 return [
+    //authentication
+    'verification_link_sent'=>          'Verification link sent to your email',
+    'login_success'=>                   'Login Successfully',
+    'logout_success'=>                   'Logout Successfully',
+    ''=>          '',
+    ''=>          '',
+    ''=>          '',
+    ''=>          '',
+    ''=>          '',
+    ''=>          '',
+    ''=>          '',
     'wrong_credential' =>               'Email or Password are incorrect',
     'send_forget_password_code' =>      'A Verification Code Send to Your email',
     'internal_server_error' =>          'Internal Server Error',

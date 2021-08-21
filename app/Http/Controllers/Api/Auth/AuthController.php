@@ -5,20 +5,22 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
-// use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Exception;
+use Illuminate\Http\JsonResponse as Json;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+
+// use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AuthController extends Controller
 {
-    public function register(StoreUserRequest $request)
+    public function register(StoreUserRequest $request): Json
     {
         try {
             DB::beginTransaction();
+
             //Store image
             $file_name = '';
             if ($request->hasFile('image')) {
@@ -56,7 +58,6 @@ class AuthController extends Controller
             ]);
 
 
-
             $token = $user->createToken('myapitoken')->plainTextToken;
 
             $user->sendEmailVerificationNotification();
@@ -64,30 +65,40 @@ class AuthController extends Controller
             DB::commit();
             return response()->json([
                 "status" => 201,
-                "message" => 'verification link sent',
-                'user_token' =>  $token
+                "message" => __('api.verification_link_sent'),
+                'user_token' => $token
             ], 201);
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json([
                 'error' => true,
-                'message' => 'User not created',
+                'message' => __('api.internal_server_error'),
                 'detail' => $e->getMessage()
             ], 500);
         }
     }
 
-    public function login(Request $request)
+    public function login(Request $request) :Json
     {
-        $credentials = $request->validate([
+        //validation
+        $validator = Validator::make($request->all(), [
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
         ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 422,
+                'message' => $validator->errors()->all()
+            ], 422);
+        }
+
+        $credentials = $request->all();
+
         //check email
         $user = User::where('email', $credentials['email'])->get()->first();
 
-        //check passwors
+        //check password
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
             return response()->json([
                 "status" => 401,
@@ -101,50 +112,50 @@ class AuthController extends Controller
 
         return response()->json([
             "status" => 200,
-            "message" => 'user logged in succefully',
+            "message" => __('api.login_success'),
             'data' => $user
         ], 200);
     }
 
 
-    public function logout()
+    public function logout() : Json
     {
         auth()->user()->tokens()->delete();
         return response()->json([
             "status" => 200,
-            "message" => 'user logout succefully',
+            "message" => __('api.logout_success'),
         ], 200);
     }
 
-    public static function resetPassword(Request $request)
+    public static function resetPassword(Request $request) : Json
     {
         $messages = [
             'old_password.required' => __('api.old_password_req'),
             'new_password.required' => __('api.new_password_req'),
-            'old_password.min'=>       __('api.old_password_min'),
-            'new_password.min'=>       __('api.new_password_min'),
+            'old_password.min' => __('api.old_password_min'),
+            'new_password.min' => __('api.new_password_min'),
         ];
         //validation
-        $validator = Validator::make($request->all(),[
-            'old_password'=>['required','string','min:8'],
-            'new_password'=>['required','string','min:8'],
-        ],$messages);
+        $validator = Validator::make($request->all(), [
+            'old_password' => ['required', 'string', 'min:8'],
+            'new_password' => ['required', 'string', 'min:8'],
+        ], $messages);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => 422,
                 'message' => $validator->errors()->all()
-            ],422);
+            ], 422);
         }
 
         //get user
         $user = auth()->user();
         //check password
-        if(!Hash::check($request->old_password,$user->password)){
+        if (!Hash::check($request->old_password, $user->password)) {
             return response()->json([
                 'status' => 403,
                 'message' => __('api.invalid_password')
-            ],403);
+            ], 403);
         }
 
         $user->password = bcrypt($request->new_password);
@@ -153,7 +164,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 200,
             'message' => __('api.api.password_reset_success')
-        ],200);
+        ], 200);
 
     }
 }
