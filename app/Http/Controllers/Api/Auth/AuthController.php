@@ -136,16 +136,23 @@ class AuthController extends Controller
             'new_password.min' => __('api.new_password_min'),
         ];
         //validation
-        $validator = Validator::make($request->all(), [
-            'old_password' => ['required', 'string', 'min:8'],
-            'new_password' => ['required', 'string', 'min:8'],
-        ], $messages);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'old_password' => ['required', 'string', 'min:8'],
+                'new_password' => ['required', 'string', 'min:8'],
+            ],
+            $messages
+        );
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 422,
-                'message' => $validator->errors()->all()
-            ], 422);
+            return response()->json(
+                [
+                    'status' => 422,
+                    'message' => $validator->errors()->all()
+                ],
+                422
+            );
         }
 
         //get user
