@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserFriendsTable extends Migration
+class CreatePicnicUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateUserFriendsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_friends', function (Blueprint $table) {
+        Schema::create('picnic_users', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('friend_id')->constrained('users');
-            $table->primary(['user_id', 'friend_id']);
+            $table->foreignId('picnic_id')->constrained('picnics');
+            $table->primary(['user_id', 'picnic_id']);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateUserFriendsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_friends');
+        Schema::dropIfExists('picnic_users');
     }
 }

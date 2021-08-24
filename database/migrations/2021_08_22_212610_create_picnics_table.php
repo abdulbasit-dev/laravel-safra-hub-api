@@ -18,10 +18,19 @@ class CreatePicnicsTable extends Migration
             function (Blueprint $table) {
                 $table->id();
                 $table->string('location')->comment('it be the title of the picnic');
-                $table->boolean('type')->comment('0 => public, 1 => private');
+                $table->integer('type')->comment('0 => public, 1 => private, 3 => closed');
                 $table->boolean('currency_type')->comment('0 => $, 1 => IQD');
                 $table->text('description')->nullable();
-
+                $table->foreignId('created_by')->constrained('users');
+                $table->integer('no_of_people')->nullable();
+                $table->string('code',10)->nullable();
+                $table->string('qrcode')->nullable();
+                $table->text('google_drive_link')->nullable();
+                $table->float('item_cost')->nullable();
+                $table->float('gas_cost')->nullable();
+                $table->float('total_cost')->nullable();
+                $table->dateTime('start_at');
+                $table->dateTime('end_at');
                 $table->timestamps();
             }
         );
