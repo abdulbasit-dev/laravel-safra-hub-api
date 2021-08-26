@@ -17,7 +17,7 @@ class CreatePicnicsTable extends Migration
             'picnics',
             function (Blueprint $table) {
                 $table->id();
-                $table->string('location')->comment('it be the title of the picnic');
+                $table->string('location',100)->comment('it be the title of the picnic');
                 $table->integer('type')->comment('0 => public, 1 => private, 3 => closed');
                 $table->boolean('currency_type')->comment('0 => $, 1 => IQD');
                 $table->text('description')->nullable();
@@ -29,9 +29,10 @@ class CreatePicnicsTable extends Migration
                 $table->float('item_cost')->nullable();
                 $table->float('gas_cost')->nullable();
                 $table->float('total_cost')->nullable();
-                $table->dateTime('start_at');
-                $table->dateTime('end_at');
+                $table->date('start_at');
+                $table->date('end_at')->nullable();
                 $table->timestamps();
+                $table->softDeletes();
             }
         );
     }

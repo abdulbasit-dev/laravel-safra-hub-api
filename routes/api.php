@@ -34,8 +34,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //reset password
     Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
-
-
+    //forget password
     Route::Post('validate-code',[ForgetPasswordController::class,'validateCode']);
     Route::Post('new-password',[ForgetPasswordController::class,'forgetPassword']);
 
@@ -45,13 +44,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user-profiles/{user}', [UserProfileController::class, 'userProfileById']);
     Route::put('/user-profiles', [UserProfileController::class, 'update']);
     Route::get('/user-profiles/friends', [UserProfileController::class, 'userFriends']);
+
+    Route::resource('/picnics', PicnicController::class);
 });
 
 //PUBLIC ROUTES
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
-Route::resource('picnics', PicnicController::class)->except('create', 'edit');
 Route::resource('categories', CategoryController::class)->except('create', 'edit');
 
 //Forget Password

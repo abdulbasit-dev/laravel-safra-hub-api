@@ -8,7 +8,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Picnic extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $guarded = [];
+
+    protected $casts=[
+        'currency_type'=>'integer',
+        'type'=>'integer',
+    ];
+
+
+    public function getCreatedByAtrribute($id){
+        return User::findOrFail($id);
+    }
 }

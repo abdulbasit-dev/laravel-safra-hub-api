@@ -36,7 +36,8 @@ return [
     'old_password_min'=>                'Old password must be greater than 8 character',
     'new_password_min'=>                'New password must be greater than 8 character',
     'invalid_password'=>                'Old password is incorrect',
-    'api.password_reset_success'=>      'Password rested successfully',
-    'authentication'=>'ds'
+    'password_reset_success'=>          'Password rested successfully',
 
+    //picnic
+    'picnic_created'=>                  'Picnic Created Successfully',
 ];

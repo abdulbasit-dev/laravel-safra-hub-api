@@ -13,7 +13,7 @@ class CreatePicnicUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('picnic_users', function (Blueprint $table) {
+        Schema::create('picnic_user', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('picnic_id')->constrained('picnics');
             $table->primary(['user_id', 'picnic_id']);
