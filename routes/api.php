@@ -7,8 +7,8 @@ use App\Http\Controllers\Api\Auth\ForgetPasswordController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\FriendController;
 use App\Http\Controllers\Api\PicnicController;
-use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\UserFavItemController;
+use App\Http\Controllers\Api\UserProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -25,13 +25,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-//PROTECTED ROUTES
+/*##################
+  PROTECTED ROUTES
+##################*/
 Route::group(['middleware' => ['auth:sanctum']], function () {
     //Auth
     Route::post('/logout', [AuthController::class, 'logout']);
     //Email Verify
-    Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
-    Route::post('email/check-verification', [EmailVerificationController::class, 'checkVerification']);
+    Route::post(
+        'email/verification-notification',
+        [EmailVerificationController::class, 'sendVerificationEmail']
+    );
+    Route::post(
+        'email/check-verification',
+        [EmailVerificationController::class, 'checkVerification']
+    );
     //reset password
     Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
@@ -53,8 +61,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/add-friends',[FriendController::class,'addFriends']);
     Route::post('/remove-friends',[FriendController::class,'removeFriends']);
 });
-
-//PUBLIC ROUTES
+/*##################
+    PUBLIC ROUTES
+##################*/
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
