@@ -40,4 +40,9 @@ return [
 
     //picnic
     'picnic_created'=>                  'Picnic Created Successfully',
+    'member_added'=>                    'Members added Successfully',
+
+    //friends
+    "add_friend"=>                     'User added to your friend list',
+    "remove_friend"=>                  'User removed from your friend list'
 ];

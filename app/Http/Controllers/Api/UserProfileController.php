@@ -81,17 +81,5 @@ class UserProfileController extends Controller
         ], 202);
     }
 
-    public function userFriends()
-    {
-        //get user
-        $user = auth()->user();
-        $user_friends  = $user->friends()->select(['id', 'name', 'email', 'image'])->get();
 
-        return response()->json([
-            'status' => 202,
-            'message' => 'user friends',
-            'total' => count($user_friends),
-            'data' => $user_friends
-        ], 202);
-    }
 }

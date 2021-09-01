@@ -67,15 +67,24 @@ class PicnicController extends Controller
             $picnic = Picnic::create(
                 $request->all() + [
                     'created_by' => auth()->id(),
-                    'code' =>$code,
-                    'qrcode' =>'/uploads/qrcodes/picnic/' . $location_slug . '.svg',
+                    'code' => $code,
+                    'qrcode' => '/uploads/qrcodes/picnic/' . $location_slug . '.svg',
                 ]
             );
+
+            return response()->created(201, __('api.picnic_created'), $picnic);
+
         } catch (\Exception $exception) {
-            return $exception->getMessage();
+            return response()->error(500,__('api.internal_server_error'),$exception->getMessage());
         }
 
-        return response()->created(201, __('api.picnic_created'), $picnic);
+
+    }
+
+    public function addMember(Request $request)
+    {
+
+        return response()->success(201, __('api.member_added'));
     }
 
     /**
@@ -111,4 +120,5 @@ class PicnicController extends Controller
     {
         //
     }
+
 }

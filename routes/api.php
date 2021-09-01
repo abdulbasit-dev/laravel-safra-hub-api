@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\EmailVerificationController;
 use App\Http\Controllers\Api\Auth\ForgetPasswordController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\FriendController;
 use App\Http\Controllers\Api\PicnicController;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\UserFavItemController;
@@ -43,9 +44,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user-profiles', [UserProfileController::class, 'index']);
     Route::get('/user-profiles/{user}', [UserProfileController::class, 'userProfileById']);
     Route::put('/user-profiles', [UserProfileController::class, 'update']);
-    Route::get('/user-profiles/friends', [UserProfileController::class, 'userFriends']);
 
-    Route::resource('/picnics', PicnicController::class);
+    Route::post('/picnics', [PicnicController::class,'store']);
+    Route::post('/picnics/add-member',[PicnicController::class,'addMember']);
+
+    //friends
+    Route::get('/user-friends',[FriendController::class,'userFriends']);
+    Route::post('/add-friends',[FriendController::class,'addFriends']);
+    Route::post('/remove-friends',[FriendController::class,'removeFriends']);
 });
 
 //PUBLIC ROUTES
