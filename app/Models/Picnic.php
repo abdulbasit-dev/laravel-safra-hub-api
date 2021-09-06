@@ -18,6 +18,10 @@ class Picnic extends Model
         'type'=>'integer',
     ];
 
+    function members(){
+        return $this->belongsToMany(User::class);
+    }
+
 
     public function getCreatedByAtrribute($id){
         return User::findOrFail($id);

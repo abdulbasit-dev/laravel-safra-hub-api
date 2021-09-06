@@ -51,7 +51,7 @@ class PicnicController extends Controller
 
         try {
             //generate code
-            $code = strtoupper(substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyz"), 0, 5));
+            $code = strtoupper(substr(str_shuffle("0123456789abcdefghijklmnopqrstvwxyz0123456789"), 0, 5));
 
             //generate qrcode
             $location_slug = Str::slug($request->location);
@@ -81,10 +81,26 @@ class PicnicController extends Controller
 
     }
 
-    public function addMember(Request $request)
+    public function addMember(Request $request,Picnic $picnic)
     {
+        //get all users
+        $members = $request->members;
+
+        //check if user friend of admin
+        foreach ($members as $user_id){
+            if(!auth()->user()->isFriend($user_id)){
+                return response()->error(403, __('api.not_admin_friend',['user'=>userName($user_id)->name]));
+            }
+        }
+
+        $picnic->members()->sync($members);
 
         return response()->success(201, __('api.member_added'));
+    }
+
+    public function picnicAmdin(Picnic $picnic)
+    {
+//        return
     }
 
     /**

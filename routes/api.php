@@ -53,8 +53,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user-profiles/{user}', [UserProfileController::class, 'userProfileById']);
     Route::put('/user-profiles', [UserProfileController::class, 'update']);
 
+    //Picnics
     Route::post('/picnics', [PicnicController::class,'store']);
-    Route::post('/picnics/add-member',[PicnicController::class,'addMember']);
+    Route::post('/picnics/{picnic}/add-member',[PicnicController::class,'addMember']);
 
     //friends
     Route::get('/user-friends',[FriendController::class,'userFriends']);

@@ -41,6 +41,7 @@ return [
     //picnic
     'picnic_created'=>                  'Picnic Created Successfully',
     'member_added'=>                    'Members added Successfully',
+    'not_admin_friend'=>                ':user is not a friend of picnic admin',
 
     //friends
     "add_friend"=>                     'User added to your friend list',

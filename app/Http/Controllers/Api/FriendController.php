@@ -35,7 +35,6 @@ class FriendController extends Controller
     {
         //get user
         $user = auth()->user();
-
         //add friends
         $user->friends()->sync($request->friends);
 
