@@ -1,5 +1,11 @@
 <?php
 
+use App\Models\User;
+
+function userName($user_id){
+    return User::whereId($user_id)->select('name')->first();
+}
+
 function sendNotification($notification_id, $title, $message, $id, $type)
 {
     $accesstoken = env('FCM_KEY');
@@ -25,7 +31,7 @@ function sendNotification($notification_id, $title, $message, $id, $type)
                 "icon" : "new",
                 "sound" : "default"
                 },
- 
+
           }';
     // print_r($post_data);die;
 
