@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Picnics
     Route::post('/picnics', [PicnicController::class,'store']);
     Route::post('/picnics/{picnic}/add-member',[PicnicController::class,'addMember']);
+    Route::get('/picnics/{picnic}',[PicnicController::class,'picnicAdmin']);
 
     //friends
     Route::get('/user-friends',[FriendController::class,'userFriends']);

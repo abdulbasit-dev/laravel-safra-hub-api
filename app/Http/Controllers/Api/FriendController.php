@@ -52,7 +52,7 @@ class FriendController extends Controller
             if ($exists) {
                 $user->friends()->toggle($request->friends);
             }else{
-                return response()->error(404, "This user is not a friend of $user->name");
+                return response()->error(403, "This user is not a friend of $user->name");
             }
         }
 

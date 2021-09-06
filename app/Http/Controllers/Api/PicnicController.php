@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Picnic;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -24,12 +25,7 @@ class PicnicController extends Controller
 
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //validation
@@ -89,7 +85,7 @@ class PicnicController extends Controller
         //check if user friend of admin
         foreach ($members as $user_id){
             if(!auth()->user()->isFriend($user_id)){
-                return response()->error(403, __('api.not_admin_friend',['user'=>userName($user_id)->name]));
+                return response()->error(403, __('api.not_admin_friend',['user'=>user($user_id)->name]));
             }
         }
 
@@ -98,9 +94,9 @@ class PicnicController extends Controller
         return response()->success(201, __('api.member_added'));
     }
 
-    public function picnicAmdin(Picnic $picnic)
+    public function picnicAdmin(Picnic $picnic)
     {
-//        return
+        return response()->success(200,'Picnic Admin',user($picnic->created_by));
     }
 
     /**

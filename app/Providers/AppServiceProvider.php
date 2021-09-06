@@ -33,23 +33,34 @@ class AppServiceProvider extends ServiceProvider
                 , $status_code);
         });
 
-        Response::macro('success', function ($status_code, $message) {
+        Response::macro('success', function ($status_code, $message, $data = null) {
+            $response = [
+                'status' => $status_code,
+                'message' => $message
+            ];
+            //add $reason to response if it's not null
+            $data ? $response['data'] = $data : null;
+
             return response()->json(
-                  [
-                      'status' => $status_code,
-                      'message' => $message,
-                  ]
-                , $status_code);
+                $response
+                ,
+                $status_code
+            );
         });
 
         Response::macro('error', function ($status_code, $message, $reason = null) {
+            $response = [
+                'status' => $status_code,
+                'message' => $message
+            ];
+            //add $reason to response if it's not null
+            $reason ? $response['reason'] = $reason : null;
+
             return response()->json(
-                  [
-                      'status' => $status_code,
-                      'message' => $message,
-                      'reason' => $reason
-                  ]
-                , $status_code);
+                $response
+                ,
+                $status_code
+            );
         });
 
         Response::macro('created', function ($status_code, $message, $data) {
@@ -61,6 +72,7 @@ class AppServiceProvider extends ServiceProvider
                   ]
                 , $status_code);
         });
+
         Response::macro('data', function ($status_code, $message, $data) {
             return response()->json(
                   [

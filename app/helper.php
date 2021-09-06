@@ -2,8 +2,8 @@
 
 use App\Models\User;
 
-function userName($user_id){
-    return User::whereId($user_id)->select('name')->first();
+function user($user_id){
+    return User::whereId($user_id)->first();
 }
 
 function sendNotification($notification_id, $title, $message, $id, $type)
