@@ -5,18 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $categires = Category::select('id', 'name', 'image')->get();
-        return response()->json([
-            "status" => 200,
-            "message" => "all the category",
-            "total" => count($categires),
-            'data' => $categires
-        ], 200);
+        $categories = Category::select('id', 'name', 'image')->get();
+        return response()->success(200,"all the category",$categories,true);
+
     }
 
     public function store(Request $request)
@@ -32,7 +29,7 @@ class CategoryController extends Controller
             $getFileNameWithExt = $request->file('image')->getClientOriginalName();
             $fileName = pathinfo($getFileNameWithExt, PATHINFO_FILENAME);
             $file_name = $fileName . '_' . time() . '.' . $request->image->extension();
-            $request->image->move(public_path('uploads/categroy'), $file_name);
+            $request->image->move(public_path('uploads/category'), $file_name);
         } else {
             $file_name = 'no_image.png';
         }
@@ -42,28 +39,20 @@ class CategoryController extends Controller
             'image' => '/uploads/category/' . $file_name,
         ]);
 
-        return response()->json([
-            "status" => 201,
-            "message" => 'category created succefully',
-            'data' => $category
-        ], 201);
+        return response()->success(201,'category created successfully',$category);
     }
 
     public function destroy(Category $category)
     {
+         //delete image from public folder
+         if ($category->image !== "/uploads/menu/no_image.png") {
+             $imageArr = explode('/', $category->image);
+             $image = end($imageArr);
+             $destinationPath = 'uploads/category';
+             File::delete($destinationPath . "/$image");
+         }
         $category->delete();
 
-        // //delete image from public folder
-        // if ($menu->image !== "/uploads/menu/no_image.png") {
-        //     $imageArr = explode('/', $menu->image);
-        //     $image = end($imageArr);
-        //     $destinationPath = 'uploads/menu';
-        //     File::delete($destinationPath . "/$image");
-        // }
-
-        return response()->json([
-            "status" => 202,
-            "message" => "category deleted successfuly",
-        ], 202);
+        return response()->success(202,'category deleted successfully');
     }
 }

@@ -41,7 +41,7 @@ class PicnicController extends Controller
         );
 
         if ($validator->fails()) {
-            return response()->validation(422, $validator->errors()->all());
+            return response()->error(422, $validator->errors()->all());
         }
 
 
@@ -68,7 +68,7 @@ class PicnicController extends Controller
                 ]
             );
 
-            return response()->created(201, __('api.picnic_created'), $picnic);
+            return response()->success(201, __('api.picnic_created'), $picnic);
 
         } catch (\Exception $exception) {
             return response()->error(500,__('api.internal_server_error'),$exception->getMessage());

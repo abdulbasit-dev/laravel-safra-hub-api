@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 class FriendController extends Controller
 {
 
-
     public function userFriends(Request $request)
     {
         //get user
@@ -22,7 +21,7 @@ class FriendController extends Controller
 
         $user_friends = $query->get();
 
-        return response()->data(
+        return response()->success(
             200,
             count(
                 $user_friends

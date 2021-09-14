@@ -1,14 +1,20 @@
 <?php
 
 
-use App\Http\Controllers\Api\Auth\AuthController;
-use App\Http\Controllers\Api\Auth\EmailVerificationController;
-use App\Http\Controllers\Api\Auth\ForgetPasswordController;
-use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\FriendController;
-use App\Http\Controllers\Api\PicnicController;
-use App\Http\Controllers\Api\UserFavItemController;
-use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\Api\Auth\{
+    AuthController,
+    EmailVerificationController,
+    ForgetPasswordController
+};
+
+use App\Http\Controllers\Api\{
+    CategoryController,
+    FriendController,
+    PicnicController,
+    UserFavItemController,
+    UserProfileController
+};
+
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -32,13 +38,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Auth
     Route::post('/logout', [AuthController::class, 'logout']);
     //Email Verify
-    Route::post(
-        'email/verification-notification',
-        [EmailVerificationController::class, 'sendVerificationEmail']
+    Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']
     );
-    Route::post(
-        'email/check-verification',
-        [EmailVerificationController::class, 'checkVerification']
+    Route::post('email/check-verification', [EmailVerificationController::class, 'checkVerification']
     );
     //reset password
     Route::post('/reset-password', [AuthController::class, 'resetPassword']);

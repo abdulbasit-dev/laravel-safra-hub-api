@@ -35,10 +35,11 @@ class UserFavItemController extends Controller
             $item_category['total_item_per_category'] =  count($item_category['items']);
         }
 
+//        return response()->success(200,'all items according to category', $this->total_item, true);
         return response()->json([
             'status' => 200,
             'total' => $this->total_item,
-            'message' => 'all items acording to category',
+            'message' => 'all items according to category',
             'data' => $item_categories
         ]);
     }
@@ -55,7 +56,7 @@ class UserFavItemController extends Controller
 
         return response()->json([
             "status" => 201,
-            "message" => 'item added user favorate list',
+            "message" => 'item added user favorite list',
             'data' => $favItem
         ], 201);
     }
