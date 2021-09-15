@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserFavItemReuest;
+use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\UserFavItem;
 use \Illuminate\Http\JsonResponse as Json;
+use Illuminate\Support\Facades\Validator;
 
 class UserFavItemController extends Controller
 {
@@ -44,8 +45,19 @@ class UserFavItemController extends Controller
         ]);
     }
 
-    public function store(StoreUserFavItemReuest $request) : Json
+    public function store(Request $request) : Json
     {
+        //validation
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string'],
+            'category_id' => ['required'],
+        ]);
+
+        if($validator->fails()){
+            return response()->error(422,$validator->errors()->all());
+        }
+
+
         $user_id = auth()->id();
 
         $favItem = UserFavItem::create([

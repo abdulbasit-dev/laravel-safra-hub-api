@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse as Json;
@@ -11,12 +10,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AuthController extends Controller
 {
-    public function register(StoreUserRequest $request): Json
+    public function register(Request $request): Json
     {
+        //validation
+        $validator = Validator::make($request->all(), [
+            'name' => ['min:3', 'max:50'],
+            'email' => ['required', 'email', 'regex:/gmail|outlook|yahoo/','unique:users,email'],
+            'password' => ['required', 'string', 'min:8'],
+            'birthday' => ['date'],
+            'image' => ['image', 'max:4000'],
+        ]);
+
+        if($validator->fails()){
+            return response()->error(422,$validator->errors()->all());
+        }
+
         try {
             DB::beginTransaction();
 
