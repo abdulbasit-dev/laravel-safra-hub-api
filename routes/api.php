@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('email/check-verification', [EmailVerificationController::class, 'checkVerification']
     );
     //reset password
-    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('errorbag');;
 
     //forget password
     Route::Post('validate-code',[ForgetPasswordController::class,'validateCode']);
@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('user-favorite-items', UserFavItemController::class)->except('create', 'edit', 'update');
     //User Profile
     Route::get('/user-profiles', [UserProfileController::class, 'index']);
-    Route::get('/user-profiles/{user}', [UserProfileController::class, 'userProfileById']);
+    Route::get('/user-profiles/{user}', [UserProfileController::class, 'userProfileById'])->name('user.profile');
     Route::put('/user-profiles', [UserProfileController::class, 'update']);
 
     //Picnics
@@ -62,8 +62,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //friends
     Route::get('/user-friends',[FriendController::class,'userFriends']);
-    Route::post('/add-friends',[FriendController::class,'addFriends']);
+    //return both incoming and outgoing request by type parameter
+    Route::get('/see-friends-requests',[FriendController::class,'seeFriendReq']);
+    Route::get('/outgoing-friends-request',[FriendController::class,'outgoingFriendReq']);
+    Route::post('/send-friends-request',[FriendController::class,'sendFriendReq']);
+    Route::post('/remove-friends-request',[FriendController::class,'removeFriendReq']);
+    Route::post('/response-friends-request',[FriendController::class,'friendReqAction']);
     Route::post('/remove-friends',[FriendController::class,'removeFriends']);
+    Route::post('/create-fake-friend-req',[FriendController::class,'fakeFriendReq']);
 });
 /*##################
     PUBLIC ROUTES

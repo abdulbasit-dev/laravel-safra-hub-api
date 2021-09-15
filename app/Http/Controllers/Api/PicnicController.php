@@ -85,7 +85,7 @@ class PicnicController extends Controller
         //check if user friend of admin
         foreach ($members as $user_id){
             if(!auth()->user()->isFriend($user_id)){
-                return response()->error(403, __('api.not_admin_friend',['user'=>user($user_id)->name]));
+                return response()->error(403, __('api.not_admin_friend',['user'=>user($user_id)]));
             }
         }
 

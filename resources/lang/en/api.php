@@ -12,7 +12,10 @@
 */
 
 return [
+    //app error
     'internal_server_error' =>          'Internal Server Error',
+    'not_found'=>                       'Object not found',
+
     //authentication
     'verification_link_sent'=>          'Verification link sent to your email',
     'login_success'=>                   'Login Successfully',
@@ -44,6 +47,14 @@ return [
     'not_admin_friend'=>                ':user is not a friend of picnic admin',
 
     //friends
-    "add_friend"=>                     'User added to your friend list',
-    "remove_friend"=>                  'User removed from your friend list'
+    "send_friend_req"=>                  'Friend request sent to :user',
+    "remove_friend_req"=>                'Friend request removed',
+    "request_already_there"=>            'You Already had send friend request to :user',
+    "friend_already_there"=>             ':user is already friend',
+    "incoming_friend_req"=>              'All requests that come to you',
+    "outgoing_friend_req"=>              'All requests that you send ',
+    "no_friend_req_found"=>              'No friend request found',
+    "friend_req_accepted"=>              'Friend request accepted',
+    "friend_req_rejected"=>              'Friend request rejected',
+    "remove_friend"=>                    'User removed from your friend list'
 ];

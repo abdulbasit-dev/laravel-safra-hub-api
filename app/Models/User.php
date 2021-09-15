@@ -50,6 +50,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(User::class, 'user_friends', 'user_id', 'friend_id');
     }
 
+    public function friendsReq()
+    {
+        return $this->belongsToMany(User::class, 'friend_req', 'user_id', 'friend_req_id');
+    }
+
     function picnics(){
         return $this->belongsToMany(Picnic::class);
     }
