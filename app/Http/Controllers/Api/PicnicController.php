@@ -96,6 +96,8 @@ class PicnicController extends Controller
 
     public function picnicAdmin(Picnic $picnic)
     {
+        $user = User::findOrfail($picnic->created_by);
+        return $user;
         return response()->success(200,'Picnic Admin',user($picnic->created_by));
     }
 

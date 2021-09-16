@@ -18,11 +18,11 @@ return [
 
     //authentication
     'verification_link_sent'=>          'Verification link sent to your email',
+    'email_not_verified'=>              'Your email address is not verified',
     'login_success'=>                   'Login Successfully',
     'logout_success'=>                  'Logout Successfully',
     'email_verified'=>                  'Email already Verified',
     'email_has_verified'=>              'Email has been verified',
-    'email_not_verified'=>              'Email not Verified',
     'wrong_credential' =>               'Email or Password are incorrect',
     'send_forget_password_code' =>      'A Verification Code Send to Your email',
     'user_not_found_email' =>           'No User Found with this email',

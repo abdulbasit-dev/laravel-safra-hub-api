@@ -15,55 +15,12 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AuthController extends Controller
 {
-    public static function resetPassword(Request $request): Json
-    {
-        $messages = [
-            'old_password.required' => __('api.old_password_req'),
-            'new_password.required' => __('api.new_password_req'),
-            'old_password.min' => __('api.old_password_min'),
-            'new_password.min' => __('api.new_password_min'),
-        ];
-        //validation
-        $validator = Validator::make($request->all(), [
-                'old_password' => ['required', 'string', 'min:8'],
-                'new_password' => ['required', 'string', 'min:8'],
-            ], $messages);
-
-        if ($validator->fails()) {
-            return response()->json([
-                    'status' => 422,
-                    'message' => $validator->errors()->all()
-                ], 422);
-        }
-
-        //get user
-        $user = auth()->user();
-        //check password
-        if (!Hash::check($request->old_password, $user->password)) {
-            return response()->json([
-                'status' => 403,
-                'message' => __('api.invalid_password')
-            ], 403);
-        }
-
-        $user->password = bcrypt($request->new_password);
-        $user->save();
-
-        return response()->json([
-            'status' => 200,
-            'message' => __('api.password_reset_success')
-        ], 200);
-    }
-
-    public function register(Request $request): Json
+    public function registerStep1(Request $request)
     {
         //validation
         $validator = Validator::make($request->all(), [
-            'name' => ['min:3', 'max:50'],
             'email' => ['required', 'email', 'regex:/gmail|outlook|yahoo/', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
-            'birthday' => ['date'],
-            'image' => ['image', 'max:4000'],
         ]);
 
         if ($validator->fails()) {
@@ -72,43 +29,10 @@ class AuthController extends Controller
 
         try {
             DB::beginTransaction();
-
-            //Store image
-            $file_name = '';
-            if ($request->hasFile('image')) {
-                $getFileNameWithExt = $request->file('image')->getClientOriginalName();
-                $fileName = pathinfo($getFileNameWithExt, PATHINFO_FILENAME);
-                $file_name = $fileName . '_' . time() . '.' . $request->image->extension();
-                $request->image->move(public_path('uploads/profile'), $file_name);
-            } else {
-                $file_name = 'no_image.png';
-            }
-
-            //generate qrcode
-            $name_slug = Str::slug($request->name);
-            $qr = QrCode::format('svg');
-            $qr->margin(1);
-            $qr->size(300);
-            $qr->errorCorrection('H');
-
-            //only merge image with qrcode if user send its image
-            if ($file_name !== 'no_image.png') {
-                $qr->merge('../public/uploads/profile/' . $file_name, .3);
-            }
-
-            $qr->generate('http://www.simplesoftware.io',
-                '../public/uploads/qrcodes/user/' . $name_slug . '.svg');
-
             $user = User::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => bcrypt($request->password),
-                    'gender' => $request->gender,
-                    'birthday' => $request->birthday,
-                    'image' => '/uploads/profile/' . $file_name,
-                    'qrcode' => '/uploads/qrcodes/user/' . $name_slug . '.svg',
-                ]);
-
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+            ]);
 
             $token = $user->createToken('myapitoken')->plainTextToken;
 
@@ -120,6 +44,73 @@ class AuthController extends Controller
                 "message" => __('api.verification_link_sent'),
                 'user_token' => $token
             ], 201);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->error(500, __('api.internal_server_error'), $e->getMessage());
+        }
+    }
+
+    public function registerStep2(Request $request)
+    {
+        //validation
+        $validator = Validator::make($request->all(), [
+            'name' => ['required','min:3', 'max:50'],
+            'birthday' => ['required','date'],
+            'image' => ['required','image', 'max:4000'],
+            'gender' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return response()->error(422, $validator->errors()->all());
+        }
+
+        //get user
+        $user = auth()->user();
+
+        try {
+            DB::beginTransaction();
+
+            //Store image
+            $file_name = '';
+            if ($request->hasFile('image')) {
+                $getFileNameWithExt = $request->file('image')->getClientOriginalName();
+//                $fileName = pathinfo($getFileNameWithExt, PATHINFO_FILENAME);
+                $fileName = $request->name;
+                $file_name = $fileName . '_' . time() . '.' . $request->image->extension();
+                $request->image->move(public_path('uploads/profile'), $file_name);
+            } else {
+                $file_name = 'no_image.png';
+            }
+
+            //generate qrcode
+            $name_slug = Str::slug($request->name);
+            //PROD
+//            $qr = QrCode::format('png');
+            $qr = QrCode::format('svg');
+            $qr->margin(1);
+            $qr->size(300);
+            $qr->errorCorrection('H');
+
+            //only merge image with qrcode if user send its image
+            if ($file_name !== 'no_image.png') {
+                $qr->merge('../public/uploads/profile/' . $file_name, .3);
+            }
+            //PROD
+//            $qr->generate('http://www.simplesoftware.io', '../public/uploads/qrcodes/user/' . $name_slug . '.png');
+            $qr->generate('http://www.simplesoftware.io', '../public/uploads/qrcodes/user/' . $name_slug . '.svg');
+
+            $user->update([
+                    'name' => $request->name,
+                    'gender' => $request->gender,
+                    'birthday' => $request->birthday,
+                    'image' => '/uploads/profile/' . $file_name,
+                    'qrcode' => '/uploads/qrcodes/user/' . $name_slug . '.svg',
+                ]);
+
+
+            DB::commit();
+            return response()->success(201,'User created successfully',$user);
+
         } catch (Exception $e) {
             DB::rollBack();
             return response()->json([
@@ -175,6 +166,46 @@ class AuthController extends Controller
         return response()->json([
             "status" => 200,
             "message" => __('api.logout_success'),
+        ], 200);
+    }
+
+    public static function resetPassword(Request $request): Json
+    {
+        $messages = [
+            'old_password.required' => __('api.old_password_req'),
+            'new_password.required' => __('api.new_password_req'),
+            'old_password.min' => __('api.old_password_min'),
+            'new_password.min' => __('api.new_password_min'),
+        ];
+        //validation
+        $validator = Validator::make($request->all(), [
+            'old_password' => ['required', 'string', 'min:8'],
+            'new_password' => ['required', 'string', 'min:8'],
+        ], $messages);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 422,
+                'message' => $validator->errors()->all()
+            ], 422);
+        }
+
+        //get user
+        $user = auth()->user();
+        //check password
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json([
+                'status' => 403,
+                'message' => __('api.invalid_password')
+            ], 403);
+        }
+
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => __('api.password_reset_success')
         ], 200);
     }
 }

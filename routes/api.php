@@ -36,12 +36,12 @@ use Illuminate\Support\Facades\Route;
 ##################*/
 Route::group(['middleware' => ['auth:sanctum']], function () {
     //Auth
+    Route::post('/register-step2', [AuthController::class, 'registerStep2'])->middleware('verified');
     Route::post('/logout', [AuthController::class, 'logout']);
+
     //Email Verify
-    Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']
-    );
-    Route::post('email/check-verification', [EmailVerificationController::class, 'checkVerification']
-    );
+    Route::post('email/verification-notification', [EmailVerificationController::class, 'sendVerificationEmail']);
+    Route::post('email/check-verification', [EmailVerificationController::class, 'checkVerification']);
     //reset password
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('errorbag');;
 
@@ -71,10 +71,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/remove-friends',[FriendController::class,'removeFriends']);
     Route::post('/create-fake-friend-req',[FriendController::class,'fakeFriendReq']);
 });
+
 /*##################
     PUBLIC ROUTES
 ##################*/
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register-step1', [AuthController::class, 'registerStep1']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify');
 Route::resource('categories', CategoryController::class)->except('create', 'edit');

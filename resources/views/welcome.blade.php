@@ -125,6 +125,10 @@
       font-size: 1.125rem
     }
 
+    .text-xl {
+      font-size: 1.3rem
+    }
+
     .leading-7 {
       line-height: 1.75rem
     }
@@ -428,10 +432,10 @@
       </div>
 
       <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-        <div class="grid grid-cols-1 md:grid-cols-2">
+          <div class="grid grid-cols-1 md:grid-cols-2">
 
           <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
-            <div class="flex items-center">
+            <div class="flex items-center ">
               <svg viewBox="0 0 20 20" stroke="currentColor" class="w-8 h-8 text-gray-500">
                 <path d="M10.219,1.688c-4.471,0-8.094,3.623-8.094,8.094s3.623,8.094,8.094,8.094s8.094-3.623,8.094-8.094S14.689,1.688,10.219,1.688 M10.219,17.022c-3.994,0-7.242-3.247-7.242-7.241c0-3.994,3.248-7.242,7.242-7.242c3.994,0,7.241,3.248,7.241,7.242C17.46,13.775,14.213,17.022,10.219,17.022 M15.099,7.03c-0.167-0.167-0.438-0.167-0.604,0.002L9.062,12.48l-2.269-2.277c-0.166-0.167-0.437-0.167-0.603,0c-0.166,0.166-0.168,0.437-0.002,0.603l2.573,2.578c0.079,0.08,0.188,0.125,0.3,0.125s0.222-0.045,0.303-0.125l5.736-5.751C15.268,7.466,15.265,7.196,15.099,7.03"></path>
               </svg>
@@ -439,6 +443,28 @@
                 Finish friend future (without fcm) 2021/09/15</div>
             </div>
 
+            <div class="flex items-center mt-4">
+              <svg viewBox="0 0 20 20" stroke="currentColor" class="w-8 h-8 text-gray-500">
+                <path d="M10.219,1.688c-4.471,0-8.094,3.623-8.094,8.094s3.623,8.094,8.094,8.094s8.094-3.623,8.094-8.094S14.689,1.688,10.219,1.688 M10.219,17.022c-3.994,0-7.242-3.247-7.242-7.241c0-3.994,3.248-7.242,7.242-7.242c3.994,0,7.241,3.248,7.241,7.242C17.46,13.775,14.213,17.022,10.219,17.022 M15.099,7.03c-0.167-0.167-0.438-0.167-0.604,0.002L9.062,12.48l-2.269-2.277c-0.166-0.167-0.437-0.167-0.603,0c-0.166,0.166-0.168,0.437-0.002,0.603l2.573,2.578c0.079,0.08,0.188,0.125,0.3,0.125s0.222-0.045,0.303-0.125l5.736-5.751C15.268,7.466,15.265,7.196,15.099,7.03"></path>
+              </svg>
+              <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">
+                make register in two step</div>
+            </div>
+
+          </div>
+          <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
+            <div class="ml-4 text-xl leading-7 font-semibold text-gray-700 dark:text-white">Design Views</div>
+            <div class="flex" style="flex-direction: column;margin-top: 10px">
+              <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">
+                <a target="_blank" href="https://www.figma.com/proto/HwHgi4z5Nf97SNbWexild8/Picnic-Project?page-id=0%3A1&node-id=235%3A13563&viewport=520%2C-690%2C0.07615992426872253&scaling=scale-down&starting-point-node-id=235%3A13563">Admin</a>
+              </div>
+              <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">
+                <a target="_blank" href="https://safracalculator234855.invisionapp.com/console/share/KJ2VUMG87Q/723175511">User</a>
+              </div>
+              <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">
+                <a target="_blank" href="https://safracalculator234855.invisionapp.com/console/share/7A2VUN3Y5N/723175918">Guest</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
