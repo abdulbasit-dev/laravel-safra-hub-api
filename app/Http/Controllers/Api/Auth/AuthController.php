@@ -15,19 +15,59 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class AuthController extends Controller
 {
+    public static function resetPassword(Request $request): Json
+    {
+        $messages = [
+            'old_password.required' => __('api.old_password_req'),
+            'new_password.required' => __('api.new_password_req'),
+            'old_password.min' => __('api.old_password_min'),
+            'new_password.min' => __('api.new_password_min'),
+        ];
+        //validation
+        $validator = Validator::make($request->all(), [
+                'old_password' => ['required', 'string', 'min:8'],
+                'new_password' => ['required', 'string', 'min:8'],
+            ], $messages);
+
+        if ($validator->fails()) {
+            return response()->json([
+                    'status' => 422,
+                    'message' => $validator->errors()->all()
+                ], 422);
+        }
+
+        //get user
+        $user = auth()->user();
+        //check password
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json([
+                'status' => 403,
+                'message' => __('api.invalid_password')
+            ], 403);
+        }
+
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'status' => 200,
+            'message' => __('api.password_reset_success')
+        ], 200);
+    }
+
     public function register(Request $request): Json
     {
         //validation
         $validator = Validator::make($request->all(), [
             'name' => ['min:3', 'max:50'],
-            'email' => ['required', 'email', 'regex:/gmail|outlook|yahoo/','unique:users,email'],
+            'email' => ['required', 'email', 'regex:/gmail|outlook|yahoo/', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
             'birthday' => ['date'],
             'image' => ['image', 'max:4000'],
         ]);
 
-        if($validator->fails()){
-            return response()->error(422,$validator->errors()->all());
+        if ($validator->fails()) {
+            return response()->error(422, $validator->errors()->all());
         }
 
         try {
@@ -56,13 +96,10 @@ class AuthController extends Controller
                 $qr->merge('../public/uploads/profile/' . $file_name, .3);
             }
 
-            $qr->generate(
-                'http://www.simplesoftware.io',
-                '../public/uploads/qrcodes/user/' . $name_slug . '.svg'
-            );
+            $qr->generate('http://www.simplesoftware.io',
+                '../public/uploads/qrcodes/user/' . $name_slug . '.svg');
 
-            $user = User::create(
-                [
+            $user = User::create([
                     'name' => $request->name,
                     'email' => $request->email,
                     'password' => bcrypt($request->password),
@@ -93,7 +130,7 @@ class AuthController extends Controller
         }
     }
 
-    public function login(Request $request) :Json
+    public function login(Request $request): Json
     {
         //validation
         $validator = Validator::make($request->all(), [
@@ -132,62 +169,13 @@ class AuthController extends Controller
         ], 200);
     }
 
-
-    public function logout() : Json
+    public function logout(): Json
     {
         auth()->user()->tokens()->delete();
         return response()->json([
             "status" => 200,
             "message" => __('api.logout_success'),
         ], 200);
-    }
-
-    public static function resetPassword(Request $request) : Json
-    {
-        $messages = [
-            'old_password.required' => __('api.old_password_req'),
-            'new_password.required' => __('api.new_password_req'),
-            'old_password.min' => __('api.old_password_min'),
-            'new_password.min' => __('api.new_password_min'),
-        ];
-        //validation
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'old_password' => ['required', 'string', 'min:8'],
-                'new_password' => ['required', 'string', 'min:8'],
-            ],
-            $messages
-        );
-
-        if ($validator->fails()) {
-            return response()->json(
-                [
-                    'status' => 422,
-                    'message' => $validator->errors()->all()
-                ],
-                422
-            );
-        }
-
-        //get user
-        $user = auth()->user();
-        //check password
-        if (!Hash::check($request->old_password, $user->password)) {
-            return response()->json([
-                'status' => 403,
-                'message' => __('api.invalid_password')
-            ], 403);
-        }
-
-        $user->password = bcrypt($request->new_password);
-        $user->save();
-
-        return response()->json([
-            'status' => 200,
-                                    'message' => __('api.password_reset_success')
-        ], 200);
-
     }
 }
 
