@@ -16,18 +16,12 @@ class EmailVerificationController extends Controller
     {
 
         if ($request->user()->hasVerifiedEmail()) {
-            return response()->json([
-                'status' => 200,
-                'message' => __('api.email_verified')
-            ], 200);
+            return response()->success(200,__('api.email_verified'));
         }
 
         $request->user()->sendEmailVerificationNotification();
 
-        return response()->json([
-            'status' => 200,
-            'message' => __('api.verification_link_sent')
-        ], 200);
+        return response()->success(200,__('api.verification_link_sent'));
     }
 
     public function verify(Request $request): Json
@@ -35,35 +29,22 @@ class EmailVerificationController extends Controller
         $user = User::findOrFail($request->id);
 
         if ($user->hasVerifiedEmail()) {
-            return response()->json([
-                'status' => 200,
-                'message' => __('api.email_verified')
-            ], 200);
+            return response()->success(200, __('api.email_verified'));
         }
 
         if ($user->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return response()->json([
-            'status' => 200,
-            'message' => __('api.email_has_verified')
-        ], 200);
-
+        return response()->success(200, __('api.email_has_verified'));
     }
 
     public function checkVerification(): Json
     {
         if (!auth()->user()->hasVerifiedEmail()) {
-            return response()->json([
-                'status' => 401,
-                'message' => __('api.email_not_verified')
-            ], 401);
+            return response()->error(401,__('api.email_not_verified'));
         }
 
-        return response()->json([
-            'status' => 200,
-            'message' => __('api.email_verified')
-        ], 200);
+        return response()->success(200,__('api.email_verified'));
     }
 }

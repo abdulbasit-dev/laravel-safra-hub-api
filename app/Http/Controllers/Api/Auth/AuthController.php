@@ -113,11 +113,7 @@ class AuthController extends Controller
 
         } catch (Exception $e) {
             DB::rollBack();
-            return response()->json([
-                'error' => true,
-                'message' => __('api.internal_server_error'),
-                'detail' => $e->getMessage()
-            ], 500);
+            return response()->error(500,__('api.internal_server_error'),$e->getMessage());
         }
     }
 
@@ -130,10 +126,7 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 422,
-                'message' => $validator->errors()->all()
-            ], 422);
+            return response()->error(422,$validator->errors()->all());
         }
 
         $credentials = $request->all();
@@ -143,30 +136,20 @@ class AuthController extends Controller
 
         //check password
         if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            return response()->json([
-                "status" => 401,
-                "message" => __('api.wrong_credential'),
-            ], 401);
+            return response()->error(401,__('api.wrong_credential'));
         }
 
         //create token
         $token = $user->createToken('myapitoken')->plainTextToken;
         $user["user_token"] = $token;
 
-        return response()->json([
-            "status" => 200,
-            "message" => __('api.login_success'),
-            'data' => $user
-        ], 200);
+        return response()->success(200,__('api.login_sccess'),$user);
     }
 
     public function logout(): Json
     {
         auth()->user()->tokens()->delete();
-        return response()->json([
-            "status" => 200,
-            "message" => __('api.logout_success'),
-        ], 200);
+        return response()->success(200,__('api.login_success'));
     }
 
     public static function resetPassword(Request $request): Json
@@ -184,29 +167,20 @@ class AuthController extends Controller
         ], $messages);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 422,
-                'message' => $validator->errors()->all()
-            ], 422);
+            return response()->error(422,$validator->errors()->all());
         }
 
         //get user
         $user = auth()->user();
         //check password
-        if (!Hash::check($request->old_password, $user->password)) {
-            return response()->json([
-                'status' => 403,
-                'message' => __('api.invalid_password')
-            ], 403);
+        if (!Hash::check($request->old_password, $user->password)){
+            return response()->error(403,__('api.invalid_password'));
         }
 
         $user->password = bcrypt($request->new_password);
         $user->save();
 
-        return response()->json([
-            'status' => 200,
-            'message' => __('api.password_reset_success')
-        ], 200);
+        return response()->success(200,__('api.password_reset_success'));
     }
 }
 

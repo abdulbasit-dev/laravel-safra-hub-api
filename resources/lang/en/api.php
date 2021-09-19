@@ -27,6 +27,14 @@ return [
     'send_forget_password_code' =>      'A Verification Code Send to Your email',
     'user_not_found_email' =>           'No User Found with this email',
 
+    //user profile
+    'user_updated'=>                     'User information successfully updated',
+
+    //user favorite item
+    'item_added'=>                       'Item added to your favorite list',
+    'item_not_belong_to_user'=>          'This item dosen\'t belongs to you',
+    'item_removed'=>                     'Item removed to your favorite list',
+
     //forget password
     'code_invalid' =>                   'Verification code invalid',
     'code_correct' =>                   'Verification code correct',

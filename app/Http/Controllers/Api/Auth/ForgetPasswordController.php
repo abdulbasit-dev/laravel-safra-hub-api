@@ -20,19 +20,13 @@ class ForgetPasswordController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 422,
-                'message' => $validator->errors()->all()
-            ], 422);
+            return response()->error(422,$validator->errors()->all());
         }
 
         $user = User::whereEmail($request->email)->first();
 
         if (!$user) {
-            return response()->json([
-                'status' => 404,
-                'message' => __('api.user_not_found_email')
-            ], 404);
+            return response()->error(404,__('api.user_not_found_email'));
         }
 
         //generate code
@@ -47,17 +41,10 @@ class ForgetPasswordController extends Controller
            $user->otp_verified=false;
            $user->save();
 
-            return response()->json([
-                'status' => 200,
-                'message' => __('api.send_forget_password_code')
-            ], 200);
+           return response()->success(200,__('api.send_forget_password_code'));
 
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 500,
-                'message' => __('api.internal_server_error')
-            ], 500);
-
+            return response()->error(500,__('api.internal_server_error'));
         }
     }
 
@@ -71,37 +58,25 @@ class ForgetPasswordController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 422,
-                'message' => $validator->errors()->all()
-            ], 422);
+            return response()->error(422,$validator->errors()->all());
         }
 
         //find user
         $user = User::whereEmail($request->email)->first();
         if (!$user) {
-            return response()->json([
-                'status' => 404,
-                'message' => __('api.user_not_found_email')
-            ], 404);
+            return response()->error(404,__('api.user_not_found_email'));
         }
 
 
         //validate code
         if ($user->otp != $request->code) {
-            return response()->json([
-                'status' => 422,
-                'message' => __('api.code_invalid')
-            ], 422);
+            return response()->error(422,__('api.code_invalid'));
         }
 
         //verify code
         $user->otp_verified = true;
         $user->save();
-        return response()->json([
-            'status' => 200,
-            'message' => __('api.code_correct')
-        ], 200);
+        return response()->success(200,__('api.code_correct'));
     }
 
     public function newPassword(Request $request): Json
@@ -113,37 +88,23 @@ class ForgetPasswordController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 422,
-                'message' => $validator->errors()->all()
-            ], 422);
+            return response()->error(422,$validator->errors()->all());
         }
-
 
         //find user
         $user = User::whereEmail($request->email)->orderByDesc('id')->first();
         if (!$user) {
-            return response()->json([
-                'status' => 404,
-                'message' => __('api.user_not_found_email')
-            ], 404);
+             return response()->error(404,__('api.user_not_found_email'));
         }
 
         if (!$user->otp_verified) {
-            return response()->json([
-                'status' => 404,
-                'message' => __('api.code_not_verified')
-            ], 404);
+            return response()->error(404,__('api.code_not_verified'));
         }
 
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return response()->json([
-            'status' => 200,
-            'message' => __('api.new_password')
-        ], 200);
-
+        return response()->success(200,__('api.new_password'));
     }
 
 

@@ -38,6 +38,7 @@ class UserFavItemController extends Controller
 
 //        return response()->success(200,'all items according to category', $this->total_item, true);
         return response()->json([
+            'success'=>true,
             'status' => 200,
             'total' => $this->total_item,
             'message' => 'all items according to category',
@@ -66,11 +67,7 @@ class UserFavItemController extends Controller
             'name' => $request->name,
         ]);
 
-        return response()->json([
-            "status" => 201,
-            "message" => 'item added user favorite list',
-            'data' => $favItem
-        ], 201);
+        return response()->success(201,__('api.item_added'),$favItem);
     }
 
     public function show($item_id): Json
@@ -96,9 +93,10 @@ class UserFavItemController extends Controller
         }
 
         return response()->json([
+            'success'=>true,
             'status' => 200,
             'total' => $this->total_item,
-            'message' => 'all items acording to category',
+            'message' => 'all items according to category',
             'data' => $item_categories
         ],200);
     }
@@ -110,16 +108,10 @@ class UserFavItemController extends Controller
 
         //check if item belongs to the user
         if ($user_id !== $user_favorite_item->user_id) {
-            return response()->json([
-                "status" => 403,
-                "message" => "this item dosen't belongs to you",
-            ], 403);
+            return response()->error(403,__('api.item_not_belong_to_user'));
         }
 
         $user_favorite_item->delete();
-        return response()->json([
-            "status" => 202,
-            "message" => "item removed from user favorate list",
-        ], 202);
+        return response()->success(202,__('api.item_removed'));
     }
 }

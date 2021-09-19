@@ -12,20 +12,12 @@ class UserProfileController extends Controller
 
     public function index()
     {
-        return response()->json([
-            'status' => 200,
-            'message' => "user information",
-            'data' => auth()->user()
-        ], 200);
+        return response()->success(200,"user information",auth()->user());
     }
 
     public function userProfileById(User $user)
     {
-        return response()->json([
-            'status' => 200,
-            'message' => "user information",
-            'data' => $user
-        ], 200);
+        return response()->success(200,"user information",$user);
     }
 
     public function update(Request $request)
@@ -73,12 +65,7 @@ class UserProfileController extends Controller
         }
 
         $user->update();
-
-        return response()->json([
-            'status' => 202,
-            'message' => 'user information updated',
-            'data' => $user
-        ], 202);
+        return response()->success(200,__('api.user_updated'),$user);
     }
 
 
