@@ -1,0 +1,3439 @@
+{
+	"info": {
+		"_postman_id": "dd1c7329-cada-4429-9a03-3e0694c2d857",
+		"name": "Safra hub",
+		"description": "##### status codes\n200 => Ok <br>\n201 => data created <br>\n204 => data deleted <br>\n422 => validation error <br>\n409 => conflict (data already exist) <br>\n500 => Internal server error (come with a resone) <br>",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "authentication",
+			"item": [
+				{
+					"name": "register step1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "ku",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "sara@gmail.com ",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/register-step1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"register-step1"
+							]
+						},
+						"description": "# note \n\n#### 1-send firstName and lastName together and spretated by space.                                e.g Abdulbasit Salah\n\n#### 2-the image size need to be 4mb"
+					},
+					"response": []
+				},
+				{
+					"name": "register step2",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "ku",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "sara",
+									"description": "required,",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/abdulbasit-dev/Downloads/food order/Ice cream/3.jpg"
+								},
+								{
+									"key": "birthday",
+									"value": "14-10-1999",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "2",
+									"description": "required, integer, 1 => male , 2 => female , 3 =>other",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/register-step2",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"register-step2"
+							]
+						},
+						"description": "# note \n\n#### 1-send firstName and lastName together and spretated by space.                                e.g Abdulbasit Salah\n\n#### 2-the image size need to be 4mb"
+					},
+					"response": []
+				},
+				{
+					"name": "send email verivaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "Abdulbasit s Ali",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "sss@test.comd",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/email/verification-notification",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"email",
+								"verification-notification"
+							]
+						},
+						"description": "#### this route will email verification link to user"
+					},
+					"response": []
+				},
+				{
+					"name": "check is email verify",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "Abdulbasit s Ali",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "sss@test.comd",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/email/check-verification",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"email",
+								"check-verification"
+							]
+						},
+						"description": "# note \n\n#### status = 200 mean email verified \n\n#### status = 401 mean not email verified"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "abdullbasit99salah@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dev}}/api/login",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "old_password",
+									"value": "123456789",
+									"description": "required",
+									"type": "text"
+								},
+								{
+									"key": "new_password",
+									"value": "password",
+									"description": "required",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/reset-password",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"reset-password"
+							]
+						},
+						"description": "### protected\n#### reset password"
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/api/logout",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						},
+						"description": "## protected\n## you need pass bearer token"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "forget password",
+			"item": [
+				{
+					"name": "forget password (send code)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "ku",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "wilbert.collier@yahoo.com",
+									"description": "required,must be email format",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/forget-password",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"forget-password"
+							]
+						},
+						"description": "#### this route will send the code to user email"
+					},
+					"response": []
+				},
+				{
+					"name": "validate code",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "arne84@hotmail.com",
+									"description": "required,must be email format",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "1311",
+									"description": "required,must be number",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/validate-code",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"validate-code"
+							]
+						},
+						"description": "#### this route will send the code to user email"
+					},
+					"response": []
+				},
+				{
+					"name": "new password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "arne84@hotmail.com",
+									"description": "required,must be email format",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"description": "required, string",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/new-password",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"new-password"
+							]
+						},
+						"description": "#### set new password for user. but first new to verify its code"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user profile",
+			"item": [
+				{
+					"name": "get user profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Dummy Category",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/abdulbasit-dev/Downloads/food order/Ice cream/1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dev}}/api/user-profiles",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"user-profiles"
+							]
+						},
+						"description": "#### get user infomation based on the passed user token (for signed user)"
+					},
+					"response": []
+				},
+				{
+					"name": "get user profile by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{local}}/api/user-profiles/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"user-profiles",
+								"1"
+							]
+						},
+						"description": "#### get user information based on the passed id"
+					},
+					"response": []
+				},
+				{
+					"name": "update profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "test bi4",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "3",
+									"type": "text"
+								},
+								{
+									"key": "birthday",
+									"value": "2020/03/20",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/abdulbasit-dev/Desktop/profile image/3.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/user-profiles?_method=PUT",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"user-profiles"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						},
+						"description": "#### update user information, all the data are optional whether you passed or not or pass null,\n\n#### while updating the fName and lName you should send the whole name\ne.g. old name Abdulbasit Salah -> you went to update fName to zana, you should pass ->zana Salah as full name"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user favorate item",
+			"item": [
+				{
+					"name": "return all item for user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/api/user-favorite-items",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"user-favorite-items"
+							]
+						},
+						"description": "#### return all the user favorate items, its sperated by category"
+					},
+					"response": []
+				},
+				{
+					"name": "items in single categoy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/api/user-favorate-items/4",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"user-favorate-items",
+								"4"
+							]
+						},
+						"description": "#### return all the item that belongs to the caegory, you pass the category id,"
+					},
+					"response": []
+				},
+				{
+					"name": "delete item",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/api/user-favorate-items/501",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"user-favorate-items",
+								"501"
+							]
+						},
+						"description": "user delete item from its favorate list"
+					},
+					"response": []
+				},
+				{
+					"name": "add items",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "domina",
+									"type": "text"
+								},
+								{
+									"key": "category_id",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/user-favorate-items",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"user-favorate-items"
+							]
+						},
+						"description": "#### user add item to its favorate list"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "picnic",
+			"item": [
+				{
+					"name": "get picnic (not working)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/api/picnics",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"picnics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create picnic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "location",
+									"value": "Hawaraman Helbaja",
+									"description": "required, string. 100char",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "It is a long established fact that a reader will be distracted by the s have evolved over the years, sometimes by accident, \n",
+									"description": "optinal, string",
+									"type": "text"
+								},
+								{
+									"key": "currency_type",
+									"value": "1",
+									"description": "required, integrer, 0 => $, 1 => IQD",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "2",
+									"description": "required, integrer, 0 => public, 1 => private, 3 => closed",
+									"type": "text"
+								},
+								{
+									"key": "start_at",
+									"value": "2021-08-11",
+									"description": "required, data",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/picnics",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"picnics"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "ar",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "location",
+											"value": "Hawaraman",
+											"description": "required, string. 100char",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "It is a long established fact that a reader will be distracted by the s have evolved over the years, sometimes by accident, \n",
+											"description": "optinal, string",
+											"type": "text"
+										},
+										{
+											"key": "currency_type",
+											"value": "1",
+											"description": "required, integrer, 0 => $, 1 => IQD",
+											"type": "text"
+										},
+										{
+											"key": "type",
+											"value": "2",
+											"description": "required, integrer, 0 => public, 1 => private, 3 => closed",
+											"type": "text"
+										},
+										{
+											"key": "start_at",
+											"value": "2021-08-11",
+											"description": "required, data",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{local}}/api/picnics",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"picnics"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 Aug 2021 06:25:51 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 Aug 2021 06:25:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 201,\n    \"message\": \"Picnic Created Successfully\",\n    \"data\": {\n        \"location\": \"Hawaraman\",\n        \"description\": \"It is a long established fact that a reader will be distracted by the s have evolved over the years, sometimes by accident,\",\n        \"currency_type\": 1,\n        \"type\": 2,\n        \"start_at\": \"2021-08-11\",\n        \"created_by\": 51,\n        \"code\": \"P5F2R\",\n        \"qrcode\": \"/uploads/qrcodes/picnic/hawaraman.svg\",\n        \"updated_at\": \"2021-08-25T06:25:51.000000Z\",\n        \"created_at\": \"2021-08-25T06:25:51.000000Z\",\n        \"id\": 4\n    }\n}"
+						},
+						{
+							"name": "validation errors",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "ar",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "location",
+											"value": "Hawaraman",
+											"description": "required, string. 100char",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "description",
+											"value": "It is a long established fact that a reader will be distracted by the s have evolved over the years, sometimes by accident, \n",
+											"description": "optinal, string",
+											"type": "text"
+										},
+										{
+											"key": "currency_type",
+											"value": "1",
+											"description": "required, integrer, 0 => $, 1 => IQD",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "type",
+											"value": "2",
+											"description": "required, integrer, 0 => public, 1 => private, 3 => closed",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "start_at",
+											"value": "2021-08-11",
+											"description": "required, data",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{local}}/api/picnics",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"picnics"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 Aug 2021 06:32:55 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 Aug 2021 06:32:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 422,\n    \"message\": [\n        \"حقل location مطلوب.\",\n        \"حقل currency type مطلوب.\",\n        \"حقل type مطلوب.\",\n        \"حقل start at مطلوب.\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Add Member",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"members\":[1,3,43]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local}}/api/picnics/2/add-member",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"picnics",
+								"2",
+								"add-member"
+							]
+						},
+						"description": "## add member to picnic\n####   - /api/picnics/{picnic_id}/add-member\n####   - members should be array of user_id and it should be integer\n#### - if the provied the user_id is not a friend of the admin it through error"
+					},
+					"response": [
+						{
+							"name": "Add Member",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"members\":[1,2,3,4]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/api/picnics/2/add-member (success)",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"picnics",
+										"2",
+										"add-member (success)"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 06 Sep 2021 06:44:50 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 06 Sep 2021 06:44:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 201,\n    \"message\": \"Members added Successfully\"\n}"
+						},
+						{
+							"name": "user id not friend of admin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"members\":[1,3,4,12]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/api/picnics/2/add-member",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"picnics",
+										"2",
+										"add-member"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 06 Sep 2021 07:26:30 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 06 Sep 2021 07:26:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 403,\n    \"message\": \"Zena Benedict is not a friend of picnic admin\",\n    \"reason\": null\n}"
+						}
+					]
+				},
+				{
+					"name": "picnic admin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "lang",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{local}}/api/picnics/1",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"picnics",
+								"1"
+							]
+						},
+						"description": "#### - /api/picnics/{picnic_id} \n#### - pass the picnic id in the url\n#### - return admin of a picnic"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "all categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/categories",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Dummy Categorys",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/abdulbasit-dev/Downloads/food order/Ice cream/4.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/categories",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{local}}/api/categories/10",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "friends",
+			"item": [
+				{
+					"name": "user friends",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{dev}}/api/user-friends",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"user-friends"
+							]
+						},
+						"description": "#### return all user friends\n#### for search look at the exmaples (it handle by (Query parameters)"
+					},
+					"response": [
+						{
+							"name": "user has no friends",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{local}}/api/user-friends",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"user-friends"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 Sep 2021 01:29:54 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 Sep 2021 01:29:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"This user has no friend\",\n    \"total\": 0,\n    \"data\": []\n}"
+						},
+						{
+							"name": "user has friends",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{local}}/api/user-friends",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"user-friends"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 Sep 2021 01:46:01 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 Sep 2021 01:46:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"All User Friends\",\n    \"total\": 5,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Treva Jayden\",\n            \"email\": \"frederic.powlowski@gmail.com\",\n            \"image\": \"/uploads/profile/no_image.png\",\n            \"pivot\": {\n                \"user_id\": 51,\n                \"friend_id\": 1\n            }\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Brannon Noemi\",\n            \"email\": \"ayla.borer@hessel.biz\",\n            \"image\": \"/uploads/profile/no_image.png\",\n            \"pivot\": {\n                \"user_id\": 51,\n                \"friend_id\": 3\n            }\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Maya Jaunita\",\n            \"email\": \"gretchen.dooley@gmail.com\",\n            \"image\": \"/uploads/profile/no_image.png\",\n            \"pivot\": {\n                \"user_id\": 51,\n                \"friend_id\": 4\n            }\n        },\n        {\n            \"id\": 22,\n            \"name\": \"Pietro Sadye\",\n            \"email\": \"amira81@hotmail.com\",\n            \"image\": \"/uploads/profile/no_image.png\",\n            \"pivot\": {\n                \"user_id\": 51,\n                \"friend_id\": 22\n            }\n        },\n        {\n            \"id\": 33,\n            \"name\": \"Mitchell Hermann\",\n            \"email\": \"robb.roberts@moen.com\",\n            \"image\": \"/uploads/profile/no_image.png\",\n            \"pivot\": {\n                \"user_id\": 51,\n                \"friend_id\": 33\n            }\n        }\n    ]\n}"
+						},
+						{
+							"name": "search for user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{local}}/api/user-friends?name=bra",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"user-friends"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "bra"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 Sep 2021 05:53:32 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 01 Sep 2021 05:53:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 200,\n    \"message\": \"All User Friends\",\n    \"total\": 1,\n    \"data\": [\n        {\n            \"id\": 3,\n            \"name\": \"Brannon Noemi\",\n            \"email\": \"ayla.borer@hessel.biz\",\n            \"image\": \"/uploads/profile/no_image.png\",\n            \"pivot\": {\n                \"user_id\": 51,\n                \"friend_id\": 3\n            }\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "see friend requests",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev}}/api/see-friends-requests?type=incoming",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"see-friends-requests"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "incoming"
+								},
+								{
+									"key": "type",
+									"value": "outgoing",
+									"disabled": true
+								}
+							]
+						},
+						"description": "#### return both incoming and outgoing friend request (use request parameter)<br>\n\nincoming => requests that come to you <br>\noutgoing => requests that you send"
+					},
+					"response": [
+						{
+							"name": "outgoing requests",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{local}}/api/see-friends-requests?type=ougoing",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"see-friends-requests"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "ougoing"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 08:51:12 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 08:51:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"status\": 200,\n    \"message\": \"All requests that you send \",\n    \"total\": 3,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"user_id\": 51,\n            \"name\": \"basit\",\n            \"send_request_time\": \"2021-09-14 16:26:11\",\n            \"profile_link\": \"http://127.0.0.1:8000/api/user-profiles/51\"\n        },\n        {\n            \"id\": 2,\n            \"user_id\": 51,\n            \"name\": \"basit\",\n            \"send_request_time\": \"2021-09-14 16:26:16\",\n            \"profile_link\": \"http://127.0.0.1:8000/api/user-profiles/51\"\n        },\n        {\n            \"id\": 12,\n            \"user_id\": 51,\n            \"name\": \"basit\",\n            \"send_request_time\": \"2021-09-15 11:00:15\",\n            \"profile_link\": \"http://127.0.0.1:8000/api/user-profiles/51\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "incoming requests",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{local}}/api/see-friends-requests?type=incoming",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"see-friends-requests"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "incoming"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 08:51:34 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 08:51:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"status\": 200,\n    \"message\": \"All requests that come to you\",\n    \"total\": 1,\n    \"data\": [\n        {\n            \"id\": 11,\n            \"user_id\": 13,\n            \"name\": \"Shanny Jessica\",\n            \"send_request_time\": \"2021-09-15 10:48:15\",\n            \"profile_link\": \"http://127.0.0.1:8000/api/user-profiles/13\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "send  friend request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "ku",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "33",
+									"description": "required, integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/send-friends-request",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"send-friends-request"
+							]
+						},
+						"description": "#### send friend request to someone"
+					},
+					"response": [
+						{
+							"name": "aleardy friend (no need to send request again)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "ku",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "user_id",
+											"value": "33",
+											"description": "required, integer",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/api/send-friends-request",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"send-friends-request"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 09:26:43 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 09:26:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"status\": 409,\n    \"message\": \"Mitchell Hermann is already friend\"\n}"
+						},
+						{
+							"name": "already requested for friend",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "ku",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "friend",
+											"value": "22",
+											"description": "required, integer",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/api/send-friends-request",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"send-friends-request"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 14 Sep 2021 12:09:50 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 14 Sep 2021 12:09:50 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"status\": 409,\n    \"message\": \"You Already had send friend request to Pietro Sadye\"\n}"
+						},
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "ku",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "friend",
+											"value": "21",
+											"description": "required, integer",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/api/send-friends-request",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"send-friends-request"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 14 Sep 2021 12:10:45 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 14 Sep 2021 12:10:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"status\": 200,\n    \"message\": \"Request Friend Send to Vivienne Fermin\"\n}"
+						}
+					]
+				},
+				{
+					"name": "remove friend request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "ku",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "request_id",
+									"value": "2",
+									"description": "required, integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/remove-friends-request",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"remove-friends-request"
+							]
+						},
+						"description": "#### remove friend request by (request id)"
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "ku",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "request_id",
+											"value": "2",
+											"description": "required, integer",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/api/remove-friends-request",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"remove-friends-request"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 10:50:45 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 10:50:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"status\": 200,\n    \"message\": \"Friend request removed\"\n}"
+						},
+						{
+							"name": "invalid id",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "ku",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "request_id",
+											"value": "12",
+											"description": "required, integer",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/api/remove-friends-request",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"remove-friends-request"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 10:41:28 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 10:41:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "56"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"status\": 404,\n    \"message\": \"Object not found\",\n    \"reason\": \"the friend_request with id 12 not found in database\"\n}"
+						}
+					]
+				},
+				{
+					"name": "accept/reject request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "en",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "10",
+									"description": "required, integer, request ido",
+									"type": "text"
+								},
+								{
+									"key": "action",
+									"value": "1",
+									"description": "required, integer, 1 => accept 0=>reject",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/response-friends-request",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"response-friends-request"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "dublicate friend (will be deleted)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id",
+											"value": "6",
+											"description": "required, integer, request id",
+											"type": "text"
+										},
+										{
+											"key": "action",
+											"value": "1",
+											"description": "required, integer, 1 => accept 0=>reject",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{local}}/api/response-friends-request",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"response-friends-request"
+									]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:17:28 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:17:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"status\": 409,\n    \"message\": \"Treva Jayden is already friend\",\n    \"reason\": \"the record is deleted, because its duplicated \"\n}"
+						},
+						{
+							"name": "this friend request not found",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id",
+											"value": "6",
+											"description": "required, integer, request id",
+											"type": "text"
+										},
+										{
+											"key": "action",
+											"value": "1",
+											"description": "required, integer, 1 => accept 0=>reject",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{local}}/api/response-friends-request",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"response-friends-request"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:18:01 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:18:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"status\": 404,\n    \"message\": \"Object not found\",\n    \"reason\": \"the friend_request with id 6 not found in database\"\n}"
+						},
+						{
+							"name": "accepted",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id",
+											"value": "8",
+											"description": "required, integer, request id",
+											"type": "text"
+										},
+										{
+											"key": "action",
+											"value": "1",
+											"description": "required, integer, 1 => accept 0=>reject",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{local}}/api/response-friends-request",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"response-friends-request"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:19:33 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:19:33 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "55"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"status\": 200,\n    \"message\": \"Friend request accepted\"\n}"
+						},
+						{
+							"name": "rejected",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "en",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id",
+											"value": "9",
+											"description": "required, integer, request id",
+											"type": "text"
+										},
+										{
+											"key": "action",
+											"value": "0",
+											"description": "required, integer, 1 => accept 0=>reject",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{local}}/api/response-friends-request",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"response-friends-request"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:20:03 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:20:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"status\": 200,\n    \"message\": \"Friend request rejected\"\n}"
+						}
+					]
+				},
+				{
+					"name": "remove friends",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "lang",
+								"value": "ku",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "friend_id",
+									"value": "1",
+									"description": "required, integer",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{local}}/api/remove-friends",
+							"host": [
+								"{{local}}"
+							],
+							"path": [
+								"api",
+								"remove-friends"
+							]
+						},
+						"description": "#### return all user friends"
+					},
+					"response": [
+						{
+							"name": "friend not exist",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "ku",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "friend_id",
+											"value": "1",
+											"description": "required, integer",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/api/remove-friends",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"remove-friends"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:27:01 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:27:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"status\": 404,\n    \"message\": \"This user is not a friend of basit\"\n}"
+						},
+						{
+							"name": "success (friend removed)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "lang",
+										"value": "ku",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "friend_id",
+											"value": "1",
+											"description": "required, integer",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{local}}/api/remove-friends",
+									"host": [
+										"{{local}}"
+									],
+									"path": [
+										"api",
+										"remove-friends"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "127.0.0.1:8000"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:27:42 GMT"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 15 Sep 2021 07:27:42 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/7.4.15"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"status\": 200,\n    \"message\": \"User removed from your friend list\"\n}"
+						}
+					]
+				},
+				{
+					"name": "fake friend request (testing)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_id",
+									"value": "15",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dev}}/api/create-fake-friend-req",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"create-fake-friend-req"
+							]
+						},
+						"description": "create fake friend request to yourself(currently authenticated user) by providing user id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "test route",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{local}}/api/test",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"api",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "return all user  (test)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{dev}}/api/all-user",
+					"host": [
+						"{{dev}}"
+					],
+					"path": [
+						"api",
+						"all-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clear all cache (read doc)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local}}/api/clearallcache",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"api",
+						"clearallcache"
+					]
+				},
+				"description": "#### this route is just for back-end developer"
+			},
+			"response": []
+		},
+		{
+			"name": "status codes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local}}/api/test",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"api",
+						"test"
+					]
+				},
+				"description": "#### 422 => validation error\n#### 500 => internal server error\n#### 404 => object not found \n#### 401 => inauthnticated \n#### 403 => inaorthrized"
+			},
+			"response": []
+		},
+		{
+			"name": "{{local}}/user-profiles/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{local}}/user-profiles/1",
+					"host": [
+						"{{local}}"
+					],
+					"path": [
+						"user-profiles",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "local",
+			"value": "http://127.0.0.1:8000"
+		},
+		{
+			"key": "dev",
+			"value": "https://safra-calculator.herokuapp.com"
+		},
+		{
+			"key": "token",
+			"value": "1|INncnyG6Ngbv2zevaoHa5vCSTsNDeT5ypNHFipVy"
+		}
+	]
+}
