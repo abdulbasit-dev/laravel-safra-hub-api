@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "dd1c7329-cada-4429-9a03-3e0694c2d857",
+		"_postman_id": "3a6b1615-6ad5-4a43-8ad3-2736f49daced",
 		"name": "Safra hub",
 		"description": "##### status codes\n200 => Ok <br>\n201 => data created <br>\n204 => data deleted <br>\n422 => validation error <br>\n409 => conflict (data already exist) <br>\n500 => Internal server error (come with a resone) <br>",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12162986"
 	},
 	"item": [
 		{
